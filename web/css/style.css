@@ -1,0 +1,641 @@
+
+.content input, .content select {
+    font-size: 17px;
+    padding: 2px;
+    border-radius: 4px;
+}
+
+.content textarea {
+    padding: 2px;
+    border-radius: 4px;
+    width: 96%;
+}
+
+.content .team_list li {
+    float: left;
+    width: 48%;
+    margin: 5px;
+}
+
+.content .team_list li .avatar {
+    height: 100px;
+    float: left;
+    margin: 4px;
+}
+.content .team_list li .avatar img {
+    width: 70px;
+}
+.content #add_comments .notified_users {
+    font-size: 12px;
+    padding: 3px;
+    margin: 3px;
+    list-style: none;
+}
+.content #add_comments textarea {
+	width: 100%;
+	height: 160px;
+}
+
+.content .block_comments .comments_list li {
+	border-bottom: 1px solid #ccc;
+}
+
+.content .block_comments .comments_list li .info {
+	margin: 6px;
+	padding: 4px;
+	margin-left: 30px;
+	padding-left: 20px;
+	border: 1px dashed #333;
+}
+
+.content .comments_list {
+	padding: 2px;
+	margin: 2px;
+}
+
+.content .comments_list li {
+	list-style: none;
+	padding: 17px;
+	margin: 3px;
+}
+
+.content .comments_list > li .ajax_control_but {
+    display: none;
+}
+.content .comments_list > li:hover .ajax_control_but {
+    display: block;
+	padding: 3px;
+}
+
+.content .comments_list > ul li .ajax_control_but {
+    display: none;
+}
+.content .comments_list > ul li:hover .ajax_control_but {
+    display: block;
+	padding: 3px;
+}
+
+.content .comments_list .comm_edit {
+	float: right;
+	width: 590px;
+	display: none;
+}
+
+.content .comments_list .comm_edit textarea {
+	width: 99%;
+	height: 190px;
+}
+
+.content .comments_list li .comm_text {
+    margin-top: 12px;
+}
+.content .comments_list li:hover {
+	
+}
+
+.content .task_head {
+	font-size: 14px;
+	padding: 5px;
+    margin: 5px;
+	border: 1px solid #EBF0F7;
+    box-shadow: 12px 12px 12px #EBF0F7;
+	background-color: #f4f4f4;
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
+.content .task_head p {
+	padding: 1px;
+	margin: 1px;
+}
+.content .task_head select {
+	font-size: 14px;
+	padding: 1px;
+	margin: 1px;
+}
+
+.content .block_main .auth_block {
+    padding: 10px;
+}
+
+.content .block_main input.datepicker {
+    width: 100px;
+}
+
+.content .block_main .search_form {
+    text-align: right;
+}
+
+.content .block_sidebar .search_form input[type=text] {
+    width: 177px;
+}
+
+.content form .error {
+	font-size: 12px;
+	color: red;
+}
+
+.content form dd {
+	padding-top: 4px;
+}
+
+.content  .title {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.content .pagination li { 
+	float: left;
+}
+
+.content .pagination .current {
+	font-weight: bold;
+}
+
+.content  .projects_list, .content  .tasks_list {
+	list-style: none;
+	margin-top: 20px;
+	padding-left: 1px;
+}
+
+.content .project_link {
+    color: black;
+}
+
+
+
+.content  .tasks_list .hide_unactive {
+    font-size: 11px;
+    margin-left: 20px;
+}
+
+.content  .projects_list li, .content  .tasks_list > li {
+	padding: 3px;
+	margin: 3px;
+	border-radius: 4px;
+	min-height: 50px;
+	
+}
+.content  .tasks_list > li .task {
+	height: 133px;
+    overflow: hidden;
+}
+
+.content  .tasks_list > li .task .have_wait {
+	font-size: 11px;
+	border: 1px dashed red;
+	border-radius: 3px;
+	padding: 2px;
+}
+
+.content  .tasks_list > li .task .reviews_link {
+	font-weight: bold;
+	color: brown;
+}
+
+.content .reworks_list {
+	padding-left: 1px;
+}
+
+.content  .tasks_list > li .reworks_list > li.rework_status_all {
+    font-size: 12px;
+    max-height: 26px;
+}
+.content  .tasks_list > li .reworks_list > li .rework_comment_form textarea {
+	height: 57px;
+	width: 60%;
+	float: left;
+}
+.content  .tasks_list > li .reworks_list > li .rework_comment_form input {
+	margin: 3px;
+}
+
+.content  .tasks_list > li .reworks_list > li .rework_comments {
+	max-height: 500px;
+	overflow-y: scroll;
+}
+
+.content  .tasks_list > li .control_panel {
+    display: none;
+}
+
+.content  .tasks_list > li:hover .control_panel {
+	font-size: 11px;
+    display: block;
+}
+
+.content  .tasks_list > li:hover .control_panel select, .content  .tasks_list > li:hover .control_panel input {
+	font-size: 11px;
+}
+
+.content  .tasks_list > li.user_status_close {
+	opacity: 0.4;
+}
+
+.content  .tasks_list > li.user_status_stop {
+	opacity: 0.4;
+}
+
+.content  .tasks_list > li.user_status_money {
+	
+}
+
+.content  .tasks_list > li.user_status_expired {
+	background-color: #FCEBEE;
+	border-left: 2px dashed red;
+}
+
+.content  .tasks_list > li.task_status_expired {
+	border-left: 2px solid red;
+}
+
+.control_panel .task_status_expired {
+	border: 2px solid red;
+}
+
+.content  .tasks_list > li.task_status_wait{
+	border-left: 2px solid #f4f4f4;
+}
+
+.control_panel .task_status_wait {
+	border: 2px solid #f4f4f4;
+}
+
+.content  .tasks_list > li.task_status_active {
+	border-left: 2px solid #EBFCF9;
+}
+
+.control_panel .task_status_active {
+	border: 2px solid #EBFCF9;
+}
+
+.content  .projects_list li:hover  .ajax_control, .content  .tasks_list > li:hover  .ajax_control {
+	display: block;
+}
+
+.content  .projects_list .ajax_control, .content  .tasks_list .ajax_control {
+	display: none;
+}
+
+.content .control_panel {
+	margin: 4px;
+	padding: 5px;
+}
+
+.content .control_panel .active {
+	border: 1px solid black;
+}
+
+.content .control_panel .btn {
+	font-size: 11px;
+	padding: 2px;
+}
+
+.content .notfound {
+	padding: 30px;
+	text-align: center;
+}
+
+.block_main .tab-content > div {
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+}
+
+.block_main .projects_select {
+    width: 250px;
+}
+
+.block_main .profile {
+    padding: 1px;
+    margin: 1px;
+    list-style: none;
+}
+.block_main .profile li {
+    padding: 4px;
+    margin: 4px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+
+footer {
+	text-align: center;
+	font-size: 12px;
+}
+
+.content .submit_but {
+	padding: 5px;
+	padding-left: 20px;
+}
+.content .submit_but input {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.content .upload_link {
+	width: 99%;
+}
+
+
+.content .uploads_list li {
+    min-height: 85px;
+    padding: 10px;
+    margin: 10px;
+	list-style: none;
+}
+
+.content .upload_form {
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	padding: 10px;
+	margin: 10px;
+}
+
+.content .delete {
+	color: red;
+}
+
+.content .btn-danger.delete {
+	color: white;
+}
+
+.content .add_rework textarea {
+	width: 99%;
+	height: 200px;
+}
+
+
+.content #reworks .reworks_js_list {
+	width: 100%;
+	height: 220px;
+	display: none;
+	margin: 4px;
+	display: none;
+}
+.content #reworks .reworks_control_panel a {
+	border-bottom: 1px dashed #000;
+	margin-right: 11px;
+	color: blue;
+	text-decoration: none;
+}
+
+.content #reworks .reworks_control_panel a.active {
+	color: #333;
+}
+
+.content .reworks .rework {
+	padding: 4px;
+	border-radius: 10px;
+	border-left: 1px solid #ccc;
+}
+.content .reworks .rework:hover {
+	border-left: 1px solid #333;
+}
+
+.content  .reworks_list > li.rework_status_all {
+	list-style: none;
+	padding-top: 4px;
+	margin: 2px;
+	border: 1px solid #fff;
+	border-radius: 4px;
+	opacity: 1;
+	max-height: 38px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.content  .reworks_list > li:hover {
+	opacity: 1 !important;
+}
+.content  .reworks_list > li.full_rework {
+	list-style: none;
+	margin-top: -35px;
+	margin-left: 5px;
+    position: absolute;
+    width: 100%;
+    min-height: 177px;
+	height: auto;
+    background-color: #fff;
+    z-index: 3;
+    border: 2px solid #000;
+    padding-top: 7px;
+    cursor: default; 
+	overflow: visible;
+}
+.content  .reworks_list > li.full_rework:hover {
+	border: 2px solid #333;
+}
+
+.content  .reworks_list > li .get_rework_comments {
+    margin-top: 3px;
+}
+
+.content  .reworks_list > li .right_col {
+	padding-right: 2px !important;
+	font-size: 12px;
+	opacity: 0.5;
+}
+.content  .reworks_list > li:hover .right_col {
+	opacity: 1;
+}
+.content  .reworks_list > li .right_col select {
+	width: 100px;
+	font-size: 12px;
+}
+.content  .reworks_list > li .rework_comment {
+	margin-left: 30px;
+	padding: 8px;
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	font-style: italic;
+}
+.content  .reworks_list > li  .rework_text {
+	background-color: #f4f4f4;
+	padding: 2px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+.content  .reworks_list > li.rework_status_close {
+	opacity: 0.3;
+}
+.content  .reworks_list > li.rework_status_done {
+    background-color: #8FC947;
+}
+.content  .reworks_list > li.rework_status_stop {
+    background-color: #ccc;
+}
+.content  .reworks_list > li.rework_status_money {
+	opacity: 0.3;
+}
+.content  .reworks_list > li.rework_status_active {
+    border: 1px solid green;
+}
+.content  .reworks_list > li.rework_status_wait {
+	border: 1px dashed #000;
+}
+.content  .reworks_list > li.rework_status_expired {
+	border: red;
+}
+.content  .reworks_list > li.rework_status_deleted {
+	opacity: 0.5;
+	display: none;
+}
+.content  .reworks_list > li.rework_status_deleted pre {
+	color: white;
+}
+
+.content #reworks .reworks_control_panel {
+	text-align: right;
+	padding: 5px;
+	margin: 5px;
+	margin-bottom: 10px;
+}
+.content #reworks .reworks_control_panel select {
+	font-size: 11px;
+}
+
+.content .block_main .actions_list li {
+	padding: 10px;
+	border-bottom: 1px solid #ccc;
+	margin: 4px;
+	list-style: none;
+}
+
+.kudir_list, .workday_list, .users_list {
+    margin: 1px;
+    padding: 1px;
+
+}
+
+.edit_task_cont #members .users_list {
+	max-height: 300px;
+	overflow-y: scroll;
+}
+
+.workday_list li {
+    list-style: none;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.users_list li {
+    list-style: none;
+    bordeR: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.kudir_list li {
+    list-style: none;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.kudir_list tr.pay_in {
+    border-left: 3px solid green;
+    border-right: 3px solid green;
+}
+
+.kudir_list tr.pay_out {
+    border-left: 3px solid red;
+    border-right: 3px solid red;
+}
+
+.content .status select {
+    width: 150px;
+}
+
+.ajax_user_price, .ajax_task_price, .ajax_task_deadline {
+	border-radius: 4px;
+}
+
+.task_head .ajax_task_deadline {
+	width: 130px;
+}
+
+.task_head select {
+	width: 190px;
+}
+
+.ajax_task_price, .ajax_rework_price {
+    width: 100px;
+}
+.ajax_user_price {
+	width: 65px;
+}
+.status select {
+    border-radius: 3px;
+    padding: 2px;
+}
+
+.notice {
+    padding: 5px;
+    border-radius: 5px;
+    color: yellow;
+    background: #333;
+}
+
+.avatar img {
+    border-radius: 7px;
+}
+
+.important {
+	margin-top: 4px;
+	margin-bottom: 4px;
+    bordeR: 2px solid #F5E4E5;
+    padding: 5px;
+    border-radius: 4px; 
+}
+
+.price .final_price {
+    font-size: 25px;
+    color: red;
+}
+.reworks_price {
+	font-size: 12px;
+}
+.reworks_price .final_price {
+    font-size: 14px;
+    color: red;
+}
+
+.freek {
+    padding: 3px;
+    border-radius: 7px;
+}
+
+.block_kudir h3.kudir_h_click:hover {
+	cursor: pointer;
+}
+
+.reworks_mass {
+	text-align: center;
+	display: none;
+	width: 175px;
+	padding: 4px;
+	background: #f4f4f4;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	position: fixed;
+	top: 10%;
+	left: 28px;
+}
+.reworks_mass ul {
+	list-style: none;
+	padding: 1px;
+	margin: 1px;
+}
+.reworks_mass button {
+	text-align: left;
+	font-size: 12px;
+	padding: 2px;
+	margin: 1px;
+	width: 150px;
+}
+
+.little {
+	font-size: 10px;
+}

@@ -1,0 +1,40 @@
+{
+    "name": "pistol88/yii2-task",
+    "description": "Tasks for company",
+    "keywords": ["yii2", "yii 2", "application", "backend", "crud", "tasks", "task", "module", "pistol88"],
+    "homepage": "https://github.com/pistol88/yii2-task",
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "support": {
+        "source": "https://github.com/pistol88/yii2-task"
+    },
+    "authors": [
+        {
+            "name": "Ilya Pistol",
+            "email": "pistol88@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "*",
+        "yiisoft/yii2-bootstrap": "*",
+        "2amigos/yii2-grid-view-library": "*",
+        "pistol88/yii2-gallery": "*",
+        "pistol88/yii2-promocode": "*",
+        "pistol88/yii2-field": "*",
+        "kartik-v/yii2-grid": "*",
+        "nex/yii2-datepicker": "*"
+    },
+    "config": {
+        "process-timeout": 1800
+    },
+    "autoload": {
+        "psr-4": {
+            "pistol88\\task\\": ""
+        }
+    },
+    "extra": {
+        "bootstrap": "pistol88\\task\\Bootstrap"
+    }
+}
