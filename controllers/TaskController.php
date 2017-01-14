@@ -38,6 +38,15 @@ class TaskController extends Controller
         $searchModel = new TaskSearch();
         $dataProvider = $searchModel->search(yii::$app->user->getIdentity()->getTasks(), Yii::$app->request->queryParams);
         
+        if(yii::$app->user->getIdentity()->isDeveloper()) {
+            $dataProvider->query->andWhere(['status' => ['wait', 'active', 'expired']]);
+        } elseif(yii::$app->user->getIdentity()->isCustomer()) {
+            $dataProvider->query->andWhere(['status' => ['wait', 'active', 'expired', 'wait_customer']]);
+        } else {
+            $dataProvider->query->andWhere(['status' => ['wait', 'active', 'expired', 'wait_customer']]);
+        }
+        
+        
         if(!Yii::$app->request->get('sort')) {
             $dataProvider->query->orderBy('last_action DESC, id DESC');
         }

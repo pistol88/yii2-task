@@ -89,9 +89,7 @@ class Task extends \yii\db\ActiveRecord
     
     public function getMembers()
     {
-        $userModel = yii::$app->user->getIdentity();
-        
-        $members = $this->hasMany($userModel::className(), ['id' => 'user_id'])->viaTable('task_to_user', ['task_id' => 'id'])->all();
+        $members = $this->hasMany(yii::$app->task->stafferModel, ['id' => 'user_id'])->viaTable('task_to_user', ['task_id' => 'id'])->all();
         
         foreach($members as $member) {
             $member->attachBehavior('tasks', 'pistol88\task\behaviors\UserTask');

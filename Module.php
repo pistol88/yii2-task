@@ -9,7 +9,9 @@ class Module extends \yii\base\Module
     
     public function init()
     {
-        $model = yii::$app->user->getIdentity()->attachBehavior('tasks', 'pistol88\task\behaviors\UserTask');
+        yii::$app->user->getIdentity()->attachBehavior('taskStaffer', 'pistol88\task\behaviors\UserStaffer');
+        yii::$app->user->getIdentity()->attachBehavior('taskClient', 'pistol88\task\behaviors\UserClient');
+        yii::$app->user->getIdentity()->attachBehavior('task', 'pistol88\task\behaviors\UserTask');
         
         parent::init();
     }

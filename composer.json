@@ -20,11 +20,12 @@
         "yiisoft/yii2": "*",
         "yiisoft/yii2-bootstrap": "*",
         "2amigos/yii2-grid-view-library": "*",
-        "pistol88/yii2-gallery": "*",
-        "pistol88/yii2-promocode": "*",
-        "pistol88/yii2-field": "*",
+        "yii2mod/yii2-comments": "*",
+        "halumein/yii2-cashbox-module": "*",
         "kartik-v/yii2-grid": "*",
-        "nex/yii2-datepicker": "*"
+        "nex/yii2-datepicker": "*",
+        "pistol88/yii2-staffer": "*",
+        "pistol88/yii2-client": "*",
     },
     "config": {
         "process-timeout": 1800

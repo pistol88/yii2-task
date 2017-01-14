@@ -1,5 +1,5 @@
 <?php
-
+use yii\helpers\Url;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -19,7 +19,14 @@ $this->params['breadcrumbs'][] = $this->title;
             </p>
         </div>
         <div class="col-md-9">
-
+            <div class="task-menu">
+                <div class="menu-container">
+                <ul class="nav-pills pull-right nav">
+                    <li><a href="<?=Url::toRoute(['/task/task/index']);?>">Задачи</a></li>
+                    <li><a href="<?=Url::toRoute(['/task/project/index']);?>">Проекты</a></li>
+                    <li><a href="<?=Url::toRoute(['/task/arrears/index']);?>">Долги</a></li></ul>
+                </div>
+            </div>
         </div>
     </div>  
 
@@ -28,26 +35,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'pjax' => true,
         'filterModel' => $searchModel,
-        'toolbar'=> [
-            ['content'=>
-                Html::button('<i class="glyphicon glyphicon-plus"></i>', ['type'=>'button', 'title'=>Yii::t('kvgrid', 'Add Book'), 'class'=>'btn btn-success', 'onclick'=>'alert("This will launch the book creation form.\n\nDisabled for this demo!");']) . ' '.
-                Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['grid-demo'], ['data-pjax'=>0, 'class'=>'btn btn-default', 'title'=>Yii::t('kvgrid', 'Reset Grid')])
-            ],
-            '{export}',
-            '{toggleData}',
-        ],
-        // set export properties
         'export'=>[
             'fontAwesome'=>true
         ],
-        // parameters from the demo form
         'bordered' => 1,
         'striped' => 1,
         'condensed' => 1,
         'responsive' => 1,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'name',
+            [
+                'attribute' => 'name',
+                'content' => function($model) {
+                    return "<a href=\"".Url::toRoute('task/view', ['id' => $model->id])."\"><strong>".$model->name."</strong></a>";
+                }
+            ],
             [
                 'attribute' => 'status',
                 'filter' => Html::activeDropDownList(
@@ -57,16 +58,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'form-control', 'prompt' => 'Статус']
                 ),
                 'content' => function($model) {
-                    return yii::$app->task->statuses[$model->status];
+                    $color = '#fff';
+                    if($model->status == 'active') {
+                        $color = '#e3ece3';
+                    } elseif($model->status == 'expired') {
+                        $color = '#eacaca';
+                    }
+                    
+                    return "<span style=\"padding: 4px; background-color: $color;\">".yii::$app->task->statuses[$model->status]."</span>";
+                }
+            ],
+            [
+                'label' => 'Доработки',
+                'content' => function($model) {
+                    return $model->getReworks()->count();
                 }
             ],
             'project.name',
-            [
-                'attribute' => 'date_start',
-                'content' => function($model) {
-                    return date('d.m.Y', strtotime($model->date_start));
-                }
-            ],
             [
                 'attribute' => 'date_deadline',
                 'content' => function($model) {

@@ -5,8 +5,15 @@ use yii\base\Component;
 use yii;
 
 class Task extends Component {
+    public $stafferModel = 'pistol88\staffer\models\Staffer';
+    
     public $notDevelopersRoles = [
         'user', 'superadmin', 'administrator'
+    ];
+    
+    public $roleToCategory = [
+        'manager' => [219, 217],
+        'developer' => [214, 215, 216, 218],
     ];
     
     public $statuses = [
@@ -20,19 +27,4 @@ class Task extends Component {
         "money" => 'Ожидание оплаты',
         "deleted" => 'Удалено'
     ];
-    
-    public function isManager()
-    {
-        
-    }
-    
-    public function isCustomer()
-    {
-        
-    }
-    
-    public function isDeveloper()
-    {
-        
-    }
 }

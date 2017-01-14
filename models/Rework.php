@@ -69,4 +69,9 @@ class Rework extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }
+    
+    public function getPerfomer()
+    {
+        return $this->hasOne(yii::$app->task->stafferModel, ['id' => 'task_id']);
+    }
 }

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel pistol88\task\models\tools\ProjectSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Projects';
+$this->title = 'Проекты';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="project-index">
@@ -16,22 +16,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Project', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить проект', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?=  \kartik\grid\GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'status',
             'name',
-            'haron_user_id',
-            'accesses:ntext',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 150px;']],
         ],
     ]); ?>
 </div>

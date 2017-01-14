@@ -2,17 +2,22 @@
 use yii\helpers\Url;
 use pistol88\task\assets\TaskAsset;
 
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Задачи', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
+
 TaskAsset::register($this);
 ?>
 <div class="task_head content">
+    <h1><?=$model->name;?></h1>
     <div class="row">
     <div class="col-lg-5">
         <p class="price">
-            <?php if(yii::$app->task->isManager()) { ?>
+            <?php if(yii::$app->user->getIdentity()->isManager()) { ?>
                 Оценка: <input type="text" name="price" value="<?php echo $model->price; ?>" class="ajax_task_price full_task_page" data-id="<?php echo $model->id; ?>" />
                 <br />
                 Бюджет: <span class="dvizh_price"><?=$model->price; ?></span>
-            <?php } elseif(yii::$app->task->isCustomer()) { ?>
+            <?php } elseif(yii::$app->user->getIdentity()->isCustomer()) { ?>
                 Общий бюджет:  <span class="ob_price"><?php echo $model->price; ?></span>
             <?php } else { ?>
                 Оценка:  <span class="ta_price"><?php echo ($model->price); ?></span>
@@ -33,7 +38,7 @@ TaskAsset::register($this);
                 ?>
             </select>
         </p>
-		<?php if(yii::$app->task->isManager()) { ?>
+		<?php if(yii::$app->user->getIdentity()->isManager()) { ?>
 			<p class="payment">Оплата задачи:
 				<select name="ajax_task_payment" class="ajax_task_payment full_task_page" data-id="<?php echo $model->id; ?>" autocomplete="off" style="width: 65px;">
 					<option value="yes">Да</option>
@@ -47,7 +52,7 @@ TaskAsset::register($this);
     <div class="col-lg-3">
         <p class="deadline">
             Дедлайн:  <br />
-            <?php if(yii::$app->task->isManager()) { ?>
+            <?php if(yii::$app->user->getIdentity()->isManager()) { ?>
                 <input type="text" name="deadline" class="full_task_page datepicker ajax_task_deadline" value="<?php echo $model->date_deadline; ?>" data-id="<?php echo $model->id; ?>" />
             <?php } else { ?>
                 <strong><?php echo ($model->date_deadline);?></strong>
@@ -64,7 +69,7 @@ TaskAsset::register($this);
 	<li><a id="tab-members" href="#members" data-toggle="tab">Участники</a></li>
 	<li><a id="tab-actions" href="#actions" data-toggle="tab">Действия</a></li>
 	<li><a id="tab-accesses" href="#accesses" data-toggle="tab">Доступы</a></li>
-	<?php if(yii::$app->task->isManager()) { ?>
+	<?php if(yii::$app->user->getIdentity()->isManager()) { ?>
 		<li><a id="tab-kudir" href="#kudir" data-toggle="tab">Финансы</a></li>
 	<?php } ?>
 	<li><a id="tab-discussion" href="#discussion" data-toggle="tab">Обсуждения</a></li>
@@ -97,7 +102,7 @@ TaskAsset::register($this);
 				<select name="perfomer_id" autocomplete="off">
 					<option value="0">Для:</option>
 					<?php foreach($model->members as $member) { ?>
-						<option value="<?=$member->id;?>"><?php if(!yii::$app->task->isCustomer()) echo $member->username;?> (<?=$member->role;?>)</option>
+						<option value="<?=$member->id;?>"><?php if(!yii::$app->user->getIdentity()->isCustomer()) echo $member->username;?> (<?=$member->role;?>)</option>
 					<?php } ?>
 				</select>
                 <input type="text" name="price" value="" placeholder="Оценка" />
@@ -109,8 +114,8 @@ TaskAsset::register($this);
 				<input type="checkbox" id="do_notification" /> <label for="do_notification">Оповестить</label>:
 				<ul class="notified_users">
 					<?php foreach($model->members as $member) { ?>
-						<?php if($member->id != yii::$app->user->id) { ?>
-							<li><input type="checkbox" name="do_notification[<?php echo md5($member->email); ?>]" value="on" id="rework_notof_user_<?php echo $member->id; ?>" class="n_u_<?php echo $member->type;?>" /> <label for="rework_notof_user_<?php echo $member->id; ?>"><?php if(!yii::$app->task->isCustomer()) echo $member->username; ?> (<?php echo $member->role; ?>)</label> </li>
+						<?php if($member->id != yii::$app->user->getIdentity()->id) { ?>
+							<li><input type="checkbox" name="do_notification[<?php echo md5($member->email); ?>]" value="on" id="rework_notof_user_<?php echo $member->id; ?>" class="n_u_<?php echo $member->type;?>" /> <label for="rework_notof_user_<?php echo $member->id; ?>"><?php if(!yii::$app->user->getIdentity()->isCustomer()) echo $member->username; ?> (<?php echo $member->role; ?>)</label> </li>
 						<?php } ?>
 					<?php } ?>
 				</ul>
@@ -120,7 +125,7 @@ TaskAsset::register($this);
 		<hr />
 
         <div class="reworks_control_panel">
-            <?php if(!yii::$app->task->isCustomer()) { ?>
+            <?php if(!yii::$app->user->getIdentity()->isCustomer()) { ?>
                 <a href="#" class="leave_unpayment_reworks">Оставить неоплаченные</a>
             <?php } ?>
             
@@ -137,13 +142,13 @@ TaskAsset::register($this);
             <select name="reworks_filter_members" class="reworks_filter_members" autocomplete="off">
                 <option value="all">Все участники</option>
                 <?php foreach($model->members as $member) { ?>
-                    <option value="<?=$member->id;?>"><?php if(!yii::$app->task->isCustomer()) echo $member->username;?> (<?=$member->role; ?></option>
+                    <option value="<?=$member->id;?>"><?php if(!yii::$app->user->getIdentity()->isCustomer()) echo $member->username;?> (<?=$member->role; ?></option>
                 <?php } ?>
             </select>
-            <?php if(!yii::$app->task->isCustomer() && !yii::$app->task->isManager()) { ?>
+            <?php if(!yii::$app->user->getIdentity()->isCustomer() && !yii::$app->user->getIdentity()->isManager()) { ?>
                 <script type="text/javascript">
                     $(document).ready(function() {
-                        setTimeout("$('.reworks_filter_members').val(<?=yii::$app->user->id;?>); $('.reworks_filter_members').change();", 400);
+                        setTimeout("$('.reworks_filter_members').val(<?=yii::$app->user->getIdentity()->id;?>); $('.reworks_filter_members').change();", 400);
                     });
                 </script>
             <?php } ?>
@@ -170,11 +175,13 @@ TaskAsset::register($this);
                             <div style="display: none;" class="clear_rework_text"><?=$rework->text;?></div>
                                 <div style="clear: both;"></div>
                                 <div class="rework_comments">
-
+                                    <?php echo \yii2mod\comments\widgets\Comment::widget([
+                                        'model' => $rework,
+                                    ]); ?>
                                 </div>
 
                             
-                            <?php if(yii::$app->task->isManager() && $rework->price > 0) { ?>
+                            <?php if(yii::$app->user->getIdentity()->isManager() && $rework->price > 0) { ?>
                                 <p class="price">Бюджет: <span class="dvizh_price"><?php echo $rework->price; ?></span></p>
                             <?php } ?>
                         </div>
@@ -189,7 +196,7 @@ TaskAsset::register($this);
                             </select>
                             <?php if($rework->price > 0) { ?>
                                 <span class="little">
-                                    <?php if(yii::$app->task->isCustomer()) { ?><?php echo $rework->price; ?><?php } elseif(yii::$app->task->isManager()) { ?><?php echo $rework->price; ?><?php } else { ?><?php echo ($rework->price); ?><?php } ?>
+                                    <?php if(yii::$app->user->getIdentity()->isCustomer()) { ?><?php echo $rework->price; ?><?php } elseif(yii::$app->user->getIdentity()->isManager()) { ?><?php echo $rework->price; ?><?php } else { ?><?php echo ($rework->price); ?><?php } ?>
                                 </span>
                             <?php } ?>
                             </p>
@@ -198,16 +205,16 @@ TaskAsset::register($this);
                                     <select name="ajax_rework_perfomer" data-id="<?=$rework->id;?>" class="ajax_rework_perfomer" autocomplete="off">
                                         <option value="0">-</option>
                                         <?php foreach($model->members as $member) { ?>
-                                            <option <?php if($member->id == $rework->perfomer_id) echo 'selected="selected"'; ?> value="<?=$member->id;?>"><?php if(!yii::$app->task->isCustomer()) { ?><?=$member->username;?><?php } ?> (<?=$member->role;?>)</option>
+                                            <option <?php if($member->id == $rework->perfomer_id) echo 'selected="selected"'; ?> value="<?=$member->id;?>"><?php if(!yii::$app->user->getIdentity()->isCustomer()) { ?><?=$member->username;?><?php } ?> (<?=$member->role;?>)</option>
                                         <?php } ?>
                                     </select>
                                 </p>
                             <?php } ?>
                             <p class="price">
-                                <?php if(!isset($from_arrear) && (yii::$app->task->isManager() | yii::$app->task->isDeveloper())) { ?>
+                                <?php if(!isset($from_arrear) && (yii::$app->user->getIdentity()->isManager() | yii::$app->user->getIdentity()->isDeveloper())) { ?>
                                     Оценка: <input type="text" name="price" value="<?php echo $rework->price; ?>" class="ajax_rework_price" data-id="<?php echo $rework->id; ?>" />
                                 <?php } else { ?>
-                                    <?php if(yii::$app->task->isCustomer()) { ?>
+                                    <?php if(yii::$app->user->getIdentity()->isCustomer()) { ?>
                                         Общий бюджет:  <span class="ta_price"><?=$rework->price;?></span>
                                     <?php } else { ?>
                                         Оценка:  <span class="ta_price"><?=$rework->price;?></span>
@@ -215,7 +222,7 @@ TaskAsset::register($this);
                                 <?php } ?>
                             </p>
                             
-                            <?php if(yii::$app->task->isManager() | $rework->perfomer_id == yii::$app->user->id) { ?>
+                            <?php if(yii::$app->user->getIdentity()->isManager() | $rework->perfomer_id == yii::$app->user->getIdentity()->id) { ?>
                                 <p class="payment"<?php if($rework->price <= 0) { ?> style="display: none;"<?php } ?>>
                                     Оплачено:<br />
                                     <input type="radio" name="ajax_rework_payment<?php echo $rework->id; ?>" class="ajax_rework_payment" id="ajax_rework_payment_no<?php echo $rework->id; ?>" value="no" data-id="<?php echo $rework->id; ?>" data-user-id="<?php echo $rework->perfomer_id; ?>" <?php if($rework->payment == 'no') echo ' checked'; ?> />
@@ -249,56 +256,56 @@ TaskAsset::register($this);
 			<?php if(isset($model->members) && !empty($model->members)) { ?>
 
 					<ul class="users_list">
-					<?php foreach($model->members as $d) { ?>
+					<?php foreach($model->members as $member) { ?>
 						<li class="row">
                             <div class="col-lg-2">
-                                <?php if(isset($d->avatar) && !empty($d->avatar)) { ?>
-                                    <div class="avatar"><a href="<?php echo Url::toRoute("profile/view/$d->id"); ?>"><img src="<?php echo base_url("upload/avatars/$d->avatar"); ?>" /></a></div>
+                                <?php if(isset($member->avatar) && !empty($member->avatar)) { ?>
+                                    <div class="avatar"><a href="<?php echo Url::toRoute("profile/view/$member->id"); ?>"><img src="<?php echo base_url("upload/avatars/$member->avatar"); ?>" /></a></div>
                                 <?php } ?>
-								<?php if($d->type == 'customer') { ?>
+								<?php if($member->type == 'customer') { ?>
 									Заказчик:
 								<?php } ?>
-                                <?php if(!yii::$app->task->isCustomer()) { ?><a href="<?php echo Url::toRoute("profile/view/$d->id"); ?>"><strong><?php echo $d->username;?></strong></a><?php } ?>
-								<p><small><?php echo $d->role; ?></small></p>
+                                <?php if(!yii::$app->user->getIdentity()->isCustomer()) { ?><a href="<?php echo Url::toRoute("profile/view/$member->id"); ?>"><strong><?php echo $member->username;?></strong></a><?php } ?>
+								<p><small><?php echo $member->role; ?></small></p>
 							</div> 
-                            <?php if($d->type != 'customer' && !in_array($d->role, yii::$app->task->notDevelopersRoles)) { ?>
+                            <?php if($member->type != 'customer' && !in_array($member->role, yii::$app->task->notDevelopersRoles)) { ?>
                                 <div class="status col-lg-10">
                                     <div class="row">
-                                        <?php if(yii::$app->task->isManager()) { ?>
+                                        <?php if(yii::$app->user->getIdentity()->isManager()) { ?>
                                             <div class="col-lg-4">
                                                 Оплачено:<br />
-                                                <input name="ajax_user_price" placeholder="" value="<?php echo $d->price;?>" class="ajax_user_price" data-task-id="<?php echo $model->id; ?>" data-user-id="<?php echo $d->id; ?>"><br />
+                                                <input name="ajax_user_price" placeholder="" value="<?php echo $member->getTaskPrice($model);?>" class="ajax_user_price" data-task-id="<?php echo $model->id; ?>" data-user-id="<?php echo $member->id; ?>"><br />
                                                 
                                                 Оплачен:<br />
-                                                <input type="radio" name="ajax_user_payment<?php echo $d->id; ?>" class="ajax_user_payment" id="ajax_user_payment_no<?php echo $d->id; ?>" value="no" data-task-id="<?php echo $model->id; ?>" data-user-id="<?php echo $d->id; ?>" <?php if($d->payment == 'no') echo ' checked'; ?> />
-                                                <label for="ajax_user_payment_no<?php echo $d->id; ?>">Нет</label>
-                                                <input type="radio" name="ajax_user_payment<?php echo $d->id; ?>" class="ajax_user_payment" id="ajax_user_payment_yes<?php echo $d->id; ?>" value="yes" data-task-id="<?php echo $model->id; ?>" data-user-id="<?php echo $d->id; ?>" <?php if($d->payment == 'yes') echo ' checked'; ?> />
-                                                <label for="ajax_user_payment_yes<?php echo $d->id; ?>">Да</label>
+                                                <input type="radio" name="ajax_user_payment<?php echo $member->id; ?>" class="ajax_user_payment" id="ajax_user_payment_no<?php echo $member->id; ?>" value="no" data-task-id="<?php echo $model->id; ?>" data-user-id="<?php echo $member->id; ?>" <?php if($member->getTaskPayment($model) == 'no') echo ' checked'; ?> />
+                                                <label for="ajax_user_payment_no<?php echo $member->id; ?>">Нет</label>
+                                                <input type="radio" name="ajax_user_payment<?php echo $member->id; ?>" class="ajax_user_payment" id="ajax_user_payment_yes<?php echo $member->id; ?>" value="yes" data-task-id="<?php echo $model->id; ?>" data-user-id="<?php echo $member->id; ?>" <?php if($member->getTaskPayment($model) == 'yes') echo ' checked'; ?> />
+                                                <label for="ajax_user_payment_yes<?php echo $member->id; ?>">Да</label>
                                                 
                                             </div>
                                             <div class="col-lg-4">
                                                 Дедлайн:<br />
-                                                <input name="ajax_user_deadline" value="<?php echo get_deadline_date($d->deadline);?>" class="datepicker ajax_user_deadline" data-task-id="<?php echo $model->id; ?>" data-user-id="<?php echo $d->id; ?>">
+                                                <input name="ajax_user_deadline" value="<?php echo $member->getTaskDeadline($model);?>" class="datepicker ajax_user_deadline" data-task-id="<?php echo $model->id; ?>" data-user-id="<?php echo $member->id; ?>">
                                             </div>
                                         <?php } else { ?>
 											<div class="col-lg-4">
-												<?php if($d->id == yii::$app->user->id) { ?>
-													Оплплата:<br /> <?php echo $d->price;?><br />
-													Оплачено:<br /> <?php echo $d->payment; ?>
+												<?php if($member->id == yii::$app->user->getIdentity()->id) { ?>
+													Оплата:<br /> <?php echo $member->getTaskPrice($model);?><br />
+													Оплачено:<br /> <?php echo $member->getTaskDeadline($model); ?>
 												<?php } ?>
 											</div>
-                                            <div class="col-lg-4">Дедлайн:<br /> <?php echo $date; ?></div>
+                                            <div class="col-lg-4">Дедлайн:<br /> <?php echo $member->getTaskPrice($model);?></div>
                                         <?php } ?>
                                         
-                                        <?php if(yii::$app->task->isManager() | $d->id == yii::$app->user->id) { ?>
+                                        <?php if(yii::$app->user->getIdentity()->isManager() | $member->id == yii::$app->user->getIdentity()->id) { ?>
                                             <div class="col-lg-4">
                                                 <p class="status">
                                                     Статус:
-                                                    <select autocomplete="off" name="ajax_user_status" class="full_task_page ajax_user_status" data-task-id="<?php echo $model->id; ?>" data-user-id="<?php echo $d->id; ?>">
+                                                    <select autocomplete="off" name="ajax_user_status" class="full_task_page ajax_user_status" data-task-id="<?php echo $model->id; ?>" data-user-id="<?php echo $member->id; ?>">
                                                         <?php
                                                         
 														$statuses = yii::$app->task->statuses;;
-														echo "<option selected=\"selected\" value=\"{$d->status}\">".$d->status."</option>";
+														echo "<option selected=\"selected\" value=\"".$member->getTaskStatus($model)."\">".$member->getTaskStatus($model)."</option>";
                                                         foreach($statuses as $status => $name) {
                                                             ?>
                                                             <option value="<?php echo $status;?>"><?php echo $name;?></option>
@@ -309,7 +316,7 @@ TaskAsset::register($this);
                                                 </p>
                                             </div>
                                         <?php } else { ?>
-                                            <p>Статус: <?=$d->status;?></p>
+                                            <p>Статус: <?=$member->status;?></p>
                                         <?php } ?>
                                     </div>
                                 </div>
@@ -333,13 +340,15 @@ TaskAsset::register($this);
 	<div class="tab-pane" id="accesses">
 		<pre><?php echo yii::$app->prettytext->setText($model->accesses)->links()->getText(); ?></pre>
 	</div>
-	<?php if(yii::$app->task->isManager()) { ?>
+	<?php if(yii::$app->user->getIdentity()->isManager()) { ?>
 		<div class="tab-pane" id="kudir">
 
 		</div>
 	<?php } ?>
 	<div class="tab-pane" id="discussion">
-		
+        <?php echo \yii2mod\comments\widgets\Comment::widget([
+            'model' => $model,
+        ]); ?>
 	</div>
 </div>
 </div>
