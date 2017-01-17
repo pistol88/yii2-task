@@ -2,26 +2,46 @@
 namespace pistol88\task;
 
 use yii\base\BootstrapInterface;
+use yii\helpers\Url;
 use yii;
 
 class Bootstrap implements BootstrapInterface
 {
-    public function bootstrap($app)
+    public function bootstrap($application)
     {
-        if(!$app->has('task')) {
-            $app->set('task', [
+        
+        yii::$app->on('beforeAction', function($event) {
+            if(yii::$app->user) {
+                yii::$app->user->attachBehavior('taskStaffer', 'pistol88\task\behaviors\UserStaffer');
+                yii::$app->user->attachBehavior('taskClient', 'pistol88\task\behaviors\UserClient');
+                yii::$app->user->attachBehavior('task', 'pistol88\task\behaviors\UserTask');
+            }
+        });
+        
+        yii::$app->view->on('endBody', function() {
+            echo "<script>var dvizhTaskToolsUrl = '".Url::toRoute(['/task/widget/multi-widget', 'widget' => ''])."';</script>";
+        });
+        
+        if(!$application->has('task')) {
+            $application->set('task', [
                 'class' => '\pistol88\task\Task',
             ]);
         }
         
-        if(!$app->has('prettytext')) {
-            $app->set('prettytext', [
+        if(!$application->has('rework')) {
+            $application->set('rework', [
+                'class' => '\pistol88\task\Rework',
+            ]);
+        }
+        
+        if(!$application->has('prettytext')) {
+            $application->set('prettytext', [
                 'class' => '\pistol88\task\components\PrettyText',
             ]);
         }
         
-        if(empty($app->modules['gridview'])) {
-            $app->setModule('gridview', [
+        if(empty($application->modules['gridview'])) {
+            $application->setModule('gridview', [
                 'class' => '\kartik\grid\Module',
             ]);
         }

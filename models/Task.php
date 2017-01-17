@@ -44,7 +44,7 @@ class Task extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'project_id', 'description', 'price', 'accesses', 'status', 'haron_user_id', 'updated', 'members_data', 'members'], 'required'],
+            [['name', 'project_id', 'description', 'status'], 'required'],
             [['project_id', 'price', 'haron_user_id', 'updated', 'surcharge'], 'integer'],
             [['description', 'accesses', 'status', 'payment', 'members_data', 'members'], 'string'],
             [['date_start', 'date_deadline'], 'safe'],
@@ -72,8 +72,6 @@ class Task extends \yii\db\ActiveRecord
             'updated' => 'Обновлено',
             'members_data' => 'Данные подключенных',
             'last_action' => 'Последнее действие',
-            'surcharge' => 'Наценка',
-            'price_end' => 'Конечная цена',
         ];
     }
     
@@ -84,22 +82,60 @@ class Task extends \yii\db\ActiveRecord
     
     public function getReworks()
     {
-        return $this->hasMany(Rework::className(), ['task_id' => 'id']);
+        return $this->hasMany(Rework::className(), ['task_id' => 'id'])->where(['!=', 'status', 'delete']);
     }
     
     public function getMembers()
     {
-        $members = $this->hasMany(yii::$app->task->stafferModel, ['id' => 'user_id'])->viaTable('task_to_user', ['task_id' => 'id'])->all();
+        $staffers = $this->getStaffers();
+        $clients = $this->getClients();
+        $members = [];
         
-        foreach($members as $member) {
-            $member->attachBehavior('tasks', 'pistol88\task\behaviors\UserTask');
+        foreach($staffers as $staffer) {
+            $members[] = $staffer;
+        }
+        
+        foreach($clients as $client) {
+            $members[] = $client;
         }
         
         return $members;
     }
     
+    public function getStaffers()
+    {
+        $staffers = $this->hasMany('pistol88\staffer\models\Staffer', ['id' => 'user_id'])->viaTable('task_to_user', ['task_id' => 'id'])->all();
+        
+        foreach($staffers as $staffer) {
+            $staffer->attachBehavior('tasks', 'pistol88\task\behaviors\TaskMember');
+        }
+        
+        return $staffers;
+    }
+    
+    public function getClients()
+    {
+        $clients = $this->hasMany('pistol88\client\models\Client', ['id' => 'user_id'])->viaTable('task_to_user', ['task_id' => 'id'])->all();
+        
+        foreach($clients as $client) {
+            $client->attachBehavior('tasks', 'pistol88\task\behaviors\TaskMember');
+        }
+        
+        return $clients;
+    }
+    
+    public function getEndprice()
+    {
+        return ceil($this->price*2);
+    }
+    
     public function getActions()
     {
         return $this->hasMany(Action::className(), ['task_id' => 'id']);
+    }
+    
+    public function beforeValidate()
+    {
+        parent::beforeValidate();
     }
 }

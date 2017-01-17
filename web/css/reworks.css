@@ -1,0 +1,181 @@
+.add_rework textarea {
+	width: 99%;
+	height: 200px;
+}
+
+
+#reworks .reworks_js_list {
+	width: 100%;
+	height: 220px;
+	display: none;
+	margin: 4px;
+	display: none;
+}
+#reworks .reworks_control_panel a {
+	border-bottom: 1px dashed #000;
+	margin-right: 11px;
+	color: blue;
+	text-decoration: none;
+}
+
+#reworks .reworks_control_panel a.active {
+	color: #333;
+}
+
+.reworks .rework {
+	padding: 4px;
+	border-radius: 10px;
+	border-left: 1px solid #ccc;
+}
+.reworks .rework:hover {
+	border-left: 1px solid #333;
+}
+
+
+.reworks_list > li.rework_status_all {
+	list-style: none;
+	padding-top: 4px;
+	margin: 2px;
+	border: 1px solid #fff;
+	border-radius: 4px;
+	opacity: 1;
+	max-height: 38px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.reworks_list > li:hover {
+	opacity: 1 !important;
+}
+
+.reworks_list > li.full_rework {
+	list-style: none;
+	margin-top: -35px;
+	margin-left: 5px;
+    position: absolute;
+    width: 100%;
+    min-height: 177px;
+	height: auto;
+    background-color: #fff;
+    z-index: 3;
+    border: 2px solid #000;
+    padding-top: 7px;
+    cursor: default; 
+	overflow: visible;
+}
+
+.reworks_list > li.full_rework:hover {
+	border: 2px solid #333;
+}
+
+
+.reworks_list > li .get_rework_comments {
+    margin-top: 3px;
+}
+
+.reworks_list > li .right_col {
+	padding-right: 2px !important;
+	font-size: 12px;
+	opacity: 0.5;
+}
+
+.reworks_list > li:hover .right_col {
+	opacity: 1;
+}
+
+.reworks_list > li .right_col select {
+	width: 100px;
+	font-size: 12px;
+}
+
+.reworks_list > li .rework_comment {
+	margin-left: 30px;
+	padding: 8px;
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	font-style: italic;
+}
+
+.reworks_list > li  .rework_text {
+	background-color: #f4f4f4;
+	padding: 2px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+.reworks_list > li.rework_status_close {
+	opacity: 0.3;
+}
+
+.reworks_list > li.rework_status_done {
+    background-color: #8FC947;
+}
+
+.reworks_list > li.rework_status_stop {
+    background-color: #ccc;
+}
+
+.reworks_list > li.rework_status_money {
+	opacity: 0.3;
+}
+
+.reworks_list > li.rework_status_active {
+    border: 1px solid green;
+}
+
+.reworks_list > li.rework_status_wait {
+	border: 1px dashed #000;
+}
+
+.reworks_list > li.rework_status_expired {
+	border: red;
+}
+ .reworks_list > li.rework_status_deleted {
+	opacity: 0.5;
+	display: none;
+}
+ .reworks_list > li.rework_status_deleted pre {
+	color: white;
+}
+
+#reworks .reworks_control_panel {
+	text-align: right;
+	padding: 5px;
+	margin: 5px;
+	margin-bottom: 10px;
+}
+#reworks .reworks_control_panel select {
+	font-size: 11px;
+}
+
+.reworks_mass {
+	text-align: center;
+	display: none;
+	width: 175px;
+	padding: 4px;
+	background: #f4f4f4;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	position: fixed;
+	top: 10%;
+	left: 28px;
+}
+.reworks_mass ul {
+	list-style: none;
+	padding: 1px;
+	margin: 1px;
+}
+.reworks_mass button {
+	text-align: left;
+	font-size: 12px;
+	padding: 2px;
+	margin: 1px;
+	width: 150px;
+}
+
+.reworks_list .little {
+	font-size: 10px;
+    position: absolute;
+    right: 10px;
+    top: 1px;
+}

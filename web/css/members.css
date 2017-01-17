@@ -1,0 +1,21 @@
+
+.task-members-widget li {
+    list-style: none;
+}
+
+.task-members-widget input[name=ajax_user_deadline] {
+    width: 120px;
+}
+
+.memberLine {
+    padding: 3px;
+    padding-top: 20px;
+}
+
+.memberLine .deleteMember {
+    padding: 2px;
+}
+
+.memberLine .ajax_user_deadline {
+    width: 120px;
+}

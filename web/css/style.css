@@ -93,7 +93,7 @@
 	
 }
 
-.content .task_head {
+.task_head {
 	font-size: 14px;
 	padding: 5px;
     margin: 5px;
@@ -103,11 +103,11 @@
 	border-radius: 5px;
 	margin-bottom: 10px;
 }
-.content .task_head p {
+.task_head p {
 	padding: 1px;
 	margin: 1px;
 }
-.content .task_head select {
+.task_head select {
 	font-size: 14px;
 	padding: 1px;
 	margin: 1px;
@@ -332,218 +332,6 @@ footer {
 	font-weight: bold;
 }
 
-.content .upload_link {
-	width: 99%;
-}
-
-
-.content .uploads_list li {
-    min-height: 85px;
-    padding: 10px;
-    margin: 10px;
-	list-style: none;
-}
-
-.content .upload_form {
-	border: 1px solid #ccc;
-	border-radius: 10px;
-	padding: 10px;
-	margin: 10px;
-}
-
-.content .delete {
-	color: red;
-}
-
-.content .btn-danger.delete {
-	color: white;
-}
-
-.content .add_rework textarea {
-	width: 99%;
-	height: 200px;
-}
-
-
-.content #reworks .reworks_js_list {
-	width: 100%;
-	height: 220px;
-	display: none;
-	margin: 4px;
-	display: none;
-}
-.content #reworks .reworks_control_panel a {
-	border-bottom: 1px dashed #000;
-	margin-right: 11px;
-	color: blue;
-	text-decoration: none;
-}
-
-.content #reworks .reworks_control_panel a.active {
-	color: #333;
-}
-
-.content .reworks .rework {
-	padding: 4px;
-	border-radius: 10px;
-	border-left: 1px solid #ccc;
-}
-.content .reworks .rework:hover {
-	border-left: 1px solid #333;
-}
-
-.content  .reworks_list > li.rework_status_all {
-	list-style: none;
-	padding-top: 4px;
-	margin: 2px;
-	border: 1px solid #fff;
-	border-radius: 4px;
-	opacity: 1;
-	max-height: 38px;
-    overflow: hidden;
-    cursor: pointer;
-}
-.content  .reworks_list > li:hover {
-	opacity: 1 !important;
-}
-.content  .reworks_list > li.full_rework {
-	list-style: none;
-	margin-top: -35px;
-	margin-left: 5px;
-    position: absolute;
-    width: 100%;
-    min-height: 177px;
-	height: auto;
-    background-color: #fff;
-    z-index: 3;
-    border: 2px solid #000;
-    padding-top: 7px;
-    cursor: default; 
-	overflow: visible;
-}
-.content  .reworks_list > li.full_rework:hover {
-	border: 2px solid #333;
-}
-
-.content  .reworks_list > li .get_rework_comments {
-    margin-top: 3px;
-}
-
-.content  .reworks_list > li .right_col {
-	padding-right: 2px !important;
-	font-size: 12px;
-	opacity: 0.5;
-}
-.content  .reworks_list > li:hover .right_col {
-	opacity: 1;
-}
-.content  .reworks_list > li .right_col select {
-	width: 100px;
-	font-size: 12px;
-}
-.content  .reworks_list > li .rework_comment {
-	margin-left: 30px;
-	padding: 8px;
-	border-left: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-	font-style: italic;
-}
-.content  .reworks_list > li  .rework_text {
-	background-color: #f4f4f4;
-	padding: 2px;
-	border-radius: 5px;
-	border: 1px solid #ccc;
-}
-
-.content  .reworks_list > li.rework_status_close {
-	opacity: 0.3;
-}
-.content  .reworks_list > li.rework_status_done {
-    background-color: #8FC947;
-}
-.content  .reworks_list > li.rework_status_stop {
-    background-color: #ccc;
-}
-.content  .reworks_list > li.rework_status_money {
-	opacity: 0.3;
-}
-.content  .reworks_list > li.rework_status_active {
-    border: 1px solid green;
-}
-.content  .reworks_list > li.rework_status_wait {
-	border: 1px dashed #000;
-}
-.content  .reworks_list > li.rework_status_expired {
-	border: red;
-}
-.content  .reworks_list > li.rework_status_deleted {
-	opacity: 0.5;
-	display: none;
-}
-.content  .reworks_list > li.rework_status_deleted pre {
-	color: white;
-}
-
-.content #reworks .reworks_control_panel {
-	text-align: right;
-	padding: 5px;
-	margin: 5px;
-	margin-bottom: 10px;
-}
-.content #reworks .reworks_control_panel select {
-	font-size: 11px;
-}
-
-.content .block_main .actions_list li {
-	padding: 10px;
-	border-bottom: 1px solid #ccc;
-	margin: 4px;
-	list-style: none;
-}
-
-.kudir_list, .workday_list, .users_list {
-    margin: 1px;
-    padding: 1px;
-
-}
-
-.edit_task_cont #members .users_list {
-	max-height: 300px;
-	overflow-y: scroll;
-}
-
-.workday_list li {
-    list-style: none;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
-}
-
-.users_list li {
-    list-style: none;
-    bordeR: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
-}
-
-.kudir_list li {
-    list-style: none;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
-}
-
-.kudir_list tr.pay_in {
-    border-left: 3px solid green;
-    border-right: 3px solid green;
-}
-
-.kudir_list tr.pay_out {
-    border-left: 3px solid red;
-    border-right: 3px solid red;
-}
-
 .content .status select {
     width: 150px;
 }
@@ -571,13 +359,6 @@ footer {
     padding: 2px;
 }
 
-.notice {
-    padding: 5px;
-    border-radius: 5px;
-    color: yellow;
-    background: #333;
-}
-
 .avatar img {
     border-radius: 7px;
 }
@@ -593,49 +374,4 @@ footer {
 .price .final_price {
     font-size: 25px;
     color: red;
-}
-.reworks_price {
-	font-size: 12px;
-}
-.reworks_price .final_price {
-    font-size: 14px;
-    color: red;
-}
-
-.freek {
-    padding: 3px;
-    border-radius: 7px;
-}
-
-.block_kudir h3.kudir_h_click:hover {
-	cursor: pointer;
-}
-
-.reworks_mass {
-	text-align: center;
-	display: none;
-	width: 175px;
-	padding: 4px;
-	background: #f4f4f4;
-	border: 1px solid #ccc;
-	border-radius: 10px;
-	position: fixed;
-	top: 10%;
-	left: 28px;
-}
-.reworks_mass ul {
-	list-style: none;
-	padding: 1px;
-	margin: 1px;
-}
-.reworks_mass button {
-	text-align: left;
-	font-size: 12px;
-	padding: 2px;
-	margin: 1px;
-	width: 150px;
-}
-
-.little {
-	font-size: 10px;
 }

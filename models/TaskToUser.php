@@ -32,7 +32,7 @@ class TaskToUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'task_id', 'project_id', 'price'], 'required'],
+            [['user_id', 'task_id',], 'required'],
             [['user_id', 'task_id', 'project_id', 'price'], 'integer'],
             [['status', 'payment'], 'string'],
             [['deadline'], 'safe'],

@@ -26,6 +26,7 @@
         "nex/yii2-datepicker": "*",
         "pistol88/yii2-staffer": "*",
         "pistol88/yii2-client": "*",
+        "yiisoft/yii2-jui": "~2.0.0"
     },
     "config": {
         "process-timeout": 1800

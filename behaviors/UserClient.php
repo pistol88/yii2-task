@@ -11,4 +11,13 @@ class UserClient extends Behavior
     {
         return Client::find()->where(['user_id' => $this->owner->id])->one();
     }
+    
+    public function getMember()
+    {
+        if($client = $this->client) {
+            return $client;
+        }
+        
+        return null;
+    }
 }

@@ -5,9 +5,11 @@ namespace pistol88\task\controllers;
 use Yii;
 use pistol88\task\models\Task;
 use pistol88\task\models\tools\TaskSearch;
+use pistol88\task\widgets\Members;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * TaskController implements the CRUD actions for Task model.
@@ -20,10 +22,21 @@ class TaskController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => $this->module->adminRoles,
+                    ]
+                ]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'add-new-member' => ['POST'],
+                    'remove-member' => ['POST'],
                 ],
             ],
         ];
@@ -36,16 +49,15 @@ class TaskController extends Controller
     public function actionIndex()
     {
         $searchModel = new TaskSearch();
-        $dataProvider = $searchModel->search(yii::$app->user->getIdentity()->getTasks(), Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(yii::$app->user->getTasks(), Yii::$app->request->queryParams);
         
-        if(yii::$app->user->getIdentity()->isDeveloper()) {
+        if(yii::$app->user->isDeveloper()) {
             $dataProvider->query->andWhere(['status' => ['wait', 'active', 'expired']]);
-        } elseif(yii::$app->user->getIdentity()->isCustomer()) {
+        } elseif(yii::$app->user->isCustomer()) {
             $dataProvider->query->andWhere(['status' => ['wait', 'active', 'expired', 'wait_customer']]);
         } else {
             $dataProvider->query->andWhere(['status' => ['wait', 'active', 'expired', 'wait_customer']]);
         }
-        
         
         if(!Yii::$app->request->get('sort')) {
             $dataProvider->query->orderBy('last_action DESC, id DESC');
@@ -57,6 +69,45 @@ class TaskController extends Controller
         ]);
     }
 
+    public function actionRemoveMember($taskId, $memberId)
+    {
+        $task = $this->findModel($taskId);
+        
+        if(yii::$app->task->removeMemberById($task, $memberId)) {
+            $status = 'success';
+        } else {
+            return $status = 'fail';
+        }
+
+        return json_encode(['result' => $status, 'membersWidgetHtml' => Members::widget(['task' => $this->findModel($taskId)])]);
+    }
+    
+    public function actionAddNewMember($taskId)
+    {
+        $task = $this->findModel($taskId);
+        
+        $data = yii::$app->request->post();
+        
+        if(isset($data['clients']) && !empty($data['clients'])) {
+            foreach($data['clients'] as $clientId) {
+                $client = yii::$app->client->get($clientId);
+                if($client = yii::$app->client->get($clientId)) {
+                    yii::$app->task->addClient($task, $client);
+                }
+            }
+        }
+        
+        if(isset($data['staffers']) && !empty($data['staffers'])) {
+            foreach($data['staffers'] as $stafferId) {
+                if($staffer = yii::$app->staffer->get($stafferId)) {
+                    yii::$app->task->addStaffer($task, $staffer);
+                }
+            }
+        }
+        
+        return json_encode(['result' => 'success', 'membersWidgetHtml' => Members::widget(['task' => $this->findModel($taskId)])]);
+    }
+    
     /**
      * Displays a single Task model.
      * @param integer $id
@@ -128,7 +179,7 @@ class TaskController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Task::findOne($id)) !== null) {
+        if (($model = yii::$app->task->get($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

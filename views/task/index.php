@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'name',
                 'content' => function($model) {
-                    return "<a href=\"".Url::toRoute('task/view', ['id' => $model->id])."\"><strong>".$model->name."</strong></a>";
+                    return "<a href=\"".Url::toRoute(['task/view', 'id' => $model->id])."\"><strong>".$model->name."</strong></a>";
                 }
             ],
             [

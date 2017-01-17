@@ -11,4 +11,13 @@ class UserStaffer extends Behavior
     {
         return Staffer::find()->where(['user_id' => $this->owner->id])->one();
     }
+    
+    public function getMember()
+    {
+        if($staffer = $this->staffer) {
+            return $staffer;
+        }
+        
+        return null;
+    }
 }

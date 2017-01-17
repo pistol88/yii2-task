@@ -8,6 +8,24 @@ use pistol88\task\models\TaskToUser;
 
 class UserTask extends Behavior
 {
+    public function isCustomer()
+    {
+        if($this->owner->getStaffer()) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public function isStaffer()
+    {
+        if($this->owner->getStaffer()) {
+            return true;
+        }
+        
+        return false;
+    }
+    
     public function getTasks()
     {
         $model = $this->owner->getStaffer();
@@ -21,56 +39,20 @@ class UserTask extends Behavior
         return $model;
     }
     
-    public function getRole()
+    public function isManager()
     {
-        return $this->owner->category_id;
-    }
-    
-    public function getType()
-    {
-        return 'staffer';
-    }
-    
-    public function getTaskPrice($task)
-    {
-        $taskToUser = TaskToUser::findOne(['task_id' => $task->id, 'user_id' => $this->owner->id]);
+        $stafferModel = $this->owner->getStaffer();
         
-        if($taskToUser) {
-            return $taskToUser->price;
+        if(!$stafferModel) {
+            return false;
         }
-    }
-    
-    public function getTaskDeadline($task)
-    {
-        $taskToUser = TaskToUser::findOne(['task_id' => $task->id, 'user_id' => $this->owner->id]);
         
-        if($taskToUser) {
-            return $taskToUser->deadline;
-        }
-    }
-    
-    public function getTaskPayment($task)
-    {
-        $taskToUser = TaskToUser::findOne(['task_id' => $task->id, 'user_id' => $this->owner->id]);
-        
-        if($taskToUser) {
-            return $taskToUser->payment;
-        }
-    }
-    
-    public function getTaskStatus($task)
-    {
-        $taskToUser = TaskToUser::findOne(['task_id' => $task->id, 'user_id' => $this->owner->id]);
-        
-        if($taskToUser) {
-            return $taskToUser->payment;
-        }
-    }
-    
-    public function isCustomer()
-    {
-        if($this->owner->client) {
-            return true;
+        foreach(yii::$app->task->roleToCategory as $role => $categoryIds) {
+            foreach($categoryIds as $id) {
+                if($stafferModel->category_id == $id && $role == 'manager') {
+                    return true;
+                }
+            }
         }
         
         return false;
@@ -87,25 +69,6 @@ class UserTask extends Behavior
         foreach(yii::$app->task->roleToCategory as $role => $categoryIds) {
             foreach($categoryIds as $id) {
                 if($stafferModel->category_id == $id && $role == 'developer') {
-                    return true;
-                }
-            }
-        }
-        
-        return false;
-    }
-    
-    public function isManager()
-    {
-        $stafferModel = $this->owner->getStaffer();
-        
-        if(!$stafferModel) {
-            return false;
-        }
-        
-        foreach(yii::$app->task->roleToCategory as $role => $categoryIds) {
-            foreach($categoryIds as $id) {
-                if($stafferModel->category_id == $id && $role == 'manager') {
                     return true;
                 }
             }
