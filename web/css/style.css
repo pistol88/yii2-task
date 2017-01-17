@@ -363,15 +363,7 @@ footer {
     border-radius: 7px;
 }
 
-.important {
-	margin-top: 4px;
-	margin-bottom: 4px;
-    bordeR: 2px solid #F5E4E5;
-    padding: 5px;
-    border-radius: 4px; 
-}
 
-.price .final_price {
-    font-size: 25px;
-    color: red;
+.task_ajax_widget input, .task_ajax_widget select {
+    width: 100px;
 }

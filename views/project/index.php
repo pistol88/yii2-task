@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel pistol88\task\models\tools\ProjectSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Проекты';
+$this->title = 'Сайты';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="project-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Добавить проект', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить сайт', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?=  \kartik\grid\GridView::widget([

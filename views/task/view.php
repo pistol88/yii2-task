@@ -9,12 +9,20 @@ use pistol88\task\widgets\TaskPayment;
 use pistol88\task\widgets\TaskDeadline;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Задачи', 'url' => ['index']];
+if($project = $model->project) {
+    $this->params['breadcrumbs'][] = ['label' => $project->name, 'url' => Url::toRoute(['/task/task/index', 'TaskSearch' => ['project_id' => $project->id]])];
+}
 $this->params['breadcrumbs'][] = $this->title;
 
 TaskAsset::register($this);
 ?>
 <div class="task_head content">
-    <h1><?=$model->name;?></h1>
+    <h1>
+        <?=$model->name;?>
+        <?php if(yii::$app->user->isManager()) { ?>
+            <a href="<?=Url::toRoute(['/task/task/update', 'id' => $model->id]);?>" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a>
+        <?php } ?>
+    </h1>
     <div class="row">
         <div class="col-lg-5">
             <p class="price">

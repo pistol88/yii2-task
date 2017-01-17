@@ -2,6 +2,12 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use pistol88\task\widgets\ReworkStatus;
+use pistol88\task\widgets\ReworkDeadline;
+use pistol88\task\widgets\ReworkPrice;
+use pistol88\task\assets\TaskAsset;
+
+TaskAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $searchModel pistol88\task\models\tools\ReworkSearch */
@@ -15,13 +21,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= GridView::widget([
+    <?= \kartik\grid\GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
+            'task.project.name',
+            [
+                'attribute' => 'text',
+                'content' => function($model) {
+                    if($task = $model->task) {
+                        $taskName = $task->name;
+                    } else {
+                        $taskName = '';
+                    }
+                    return '<strong>'.$taskName.'</strong> / '.mb_substr($model->text, 0, 1000, 'UTF-8');
+                }
+            ],
             [
                 'attribute' => 'status',
                 'filter' => Html::activeDropDownList(
@@ -31,20 +46,25 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'form-control', 'prompt' => 'Статус']
                 ),
                 'content' => function($model) {
-                    return yii::$app->task->statuses[$model->status];
+                    return ReworkStatus::widget(['rework' => $model]);
+                },
+                'options' => ['style' => 'width: 150px;']
+            ],
+            [
+                'attribute' => 'price',
+                'content' => function($model) {
+                    return ReworkPrice::widget(['rework' => $model]);
                 }
             ],
             [
-                'attribute' => 'text',
+                'attribute' => 'date_deadline',
                 'content' => function($model) {
-                    return mb_substr($model->text, 0, 100, 'UTF-8');
+                    return ReworkDeadline::widget(['rework' => $model]);
                 }
             ],
-            'date_deadline',
-            'task.project.name',
-            'task.name',
+
             'perfomer.name',
-            ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 150px;']],
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{view}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 50px;']],
         ],
     ]); ?>
 </div>

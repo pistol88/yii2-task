@@ -72,7 +72,7 @@ class Rework extends \yii\db\ActiveRecord
     
     public function getPerfomer()
     {
-        return $this->hasOne(yii::$app->task->stafferModel, ['id' => 'task_id']);
+        return $this->hasOne('pistol88\staffer\models\Staffer', ['id' => 'task_id']);
     }
     
     public function getMembers()
@@ -82,5 +82,16 @@ class Rework extends \yii\db\ActiveRecord
         }
         
         return [];
+    }
+    
+    public function beforeValidate()
+    {
+        parent::beforeValidate();
+        
+        if(!$this->date_start) {
+            $this->date_start = date('Y-m-d H:i:s');
+        }
+        
+        return true;
     }
 }

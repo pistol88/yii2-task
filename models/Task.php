@@ -46,7 +46,7 @@ class Task extends \yii\db\ActiveRecord
         return [
             [['name', 'project_id', 'description', 'status'], 'required'],
             [['project_id', 'price', 'haron_user_id', 'updated', 'surcharge'], 'integer'],
-            [['description', 'accesses', 'status', 'payment', 'members_data', 'members'], 'string'],
+            [['description', 'accesses', 'status', 'payment', 'members_data', 'members', 'date_deadline'], 'string'],
             [['date_start', 'date_deadline'], 'safe'],
             [['name'], 'string', 'max' => 255],
         ];
@@ -134,8 +134,32 @@ class Task extends \yii\db\ActiveRecord
         return $this->hasMany(Action::className(), ['task_id' => 'id']);
     }
     
-    public function beforeValidate()
+    public function beforeSave($insert)
     {
-        parent::beforeValidate();
+        parent::beforeSave($insert);
+        
+        if(!$this->date_start) {
+            $this->date_start = date('Y-m-d H:i:s');
+        }
+        
+        if(!$this->haron_user_id) {
+            $this->haron_user_id = yii::$app->user->member->id;
+        }
+        
+        return true;
+    }
+    
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+     
+        if(!$this->accesses && $this->project) {
+            $this->accesses = $this->project->accesses;
+            $this->save(false);
+        }
+        
+        yii::$app->task->addStaffer($this, yii::$app->user->member);
+     
+        return true;
     }
 }

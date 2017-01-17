@@ -6,7 +6,7 @@ pistol88.task_members = {
     init: function() {
         $(document).on('keypress', '.task-members-widget .newDeveloperInput', this.addNewDeveloper);
         $(document).on('keypress', '.task-members-widget .newClientInput', this.addNewClient);
-        $(document).on('submit', '.task-members-widget .newmember form', this.addNewMember)
+        //$(document).on('submit', '.task-members-widget .newmember form', this.addNewMember)
         $(document).on('click', '.task-members-widget .deleteMember', this.deleteMember);
         $(document).on('click', '.task-members-widget .memberCheckbox', this.sendNewMemberForm)
     },

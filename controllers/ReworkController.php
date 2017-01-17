@@ -46,7 +46,16 @@ class ReworkController extends Controller
     public function actionIndex()
     {
         $searchModel = new ReworkSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, yii::$app->user->getReworks());
+        
+        if(yii::$app->user->isDeveloper()) {
+            $dataProvider->query->andWhere(['status' => ['wait', 'active', 'expired']]);
+        } elseif(yii::$app->user->isCustomer()) {
+            $dataProvider->query->andWhere(['status' => ['wait', 'wait_customer', 'active', 'expired']]);
+        } elseif(yii::$app->user->isManager()) {
+            $dataProvider->query->andWhere(['status' => ['wait', 'wait_customer', 'active', 'expired', 'stop']]);
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,

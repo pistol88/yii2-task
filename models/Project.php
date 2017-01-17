@@ -27,8 +27,8 @@ class Project extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description'], 'required'],
-            [['description'], 'string'],
+            [['name'], 'required'],
+            [['accesses', 'status'], 'string'],
             [['name'], 'string', 'max' => 255],
         ];
     }
@@ -40,8 +40,9 @@ class Project extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Название проекта',
-            'description' => 'Описание',
+            'status' => 'Статус',
+            'name' => 'Проект',
+            'accesses' => 'Доступы',
         ];
     }
     

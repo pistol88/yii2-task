@@ -41,8 +41,8 @@ class WidgetController extends Controller
     {
         if($taskId = yii::$app->request->post('task_id')) {
             $task = yii::$app->task->get($taskId);
-        } elseif($reworkId = yii::$app->request->post('task_id')) {
-            $rework = yii::$app->task->get($reworkId);
+        } elseif($reworkId = yii::$app->request->post('rework_id')) {
+            $rework = yii::$app->rework->get($reworkId);
         }
         
         switch($widget) {

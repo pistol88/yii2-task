@@ -33,18 +33,21 @@ use pistol88\task\widgets\MemberDeadline;
                             <?php if(yii::$app->user->isManager()) { ?><div class="col-md-2"><a href="<?=Url::toRoute(['/task/task/remove-member', 'taskId' => $model->id, 'memberId' => $member->id]);?>" class="deleteMember btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a></div><?php } ?>
                         </div>
                     <?php } ?>
-                    <div class="newmember row">
-                        <form action="<?=Url::toRoute(['/task/task/add-new-member', 'taskId' => $model->id]);?>">
-                            <h4><i class="glyphicon glyphicon-plus-sign"></i> Еще сотрудник:</h4>
-                            <input type="text" class="newDeveloperInput newMemberInput" name="newdeveloper" placeholder="Начните вводить имя..." autocomplete="off" />
-                            
-                            <div class="users-list">
-                                <ul>
+                    
+                    <?php if(yii::$app->user->isManager()) { ?>
+                        <div class="newmember row">
+                            <form action="<?=Url::toRoute(['/task/task/add-new-member', 'taskId' => $model->id]);?>">
+                                <h4><i class="glyphicon glyphicon-plus-sign"></i> Еще сотрудник:</h4>
+                                <input type="text" class="newDeveloperInput newMemberInput" name="newdeveloper" placeholder="Начните вводить имя..." autocomplete="off" />
                                 
-                                </ul>
-                            </div>
-                        </form>
-                    </div>
+                                <div class="users-list">
+                                    <ul>
+                                    
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                    <?php } ?>
                 </div>
                 <div class="col-md-4">
                     <h3>Заказчики</h3>
@@ -60,18 +63,22 @@ use pistol88\task\widgets\MemberDeadline;
                             <?php if(yii::$app->user->isManager()) { ?><div class="col-md-4"><a href="<?=Url::toRoute(['/task/task/remove-member', 'taskId' => $model->id, 'memberId' => $member->id]);?>" class="deleteMember btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a></div><?php } ?>
                         </div>
                     <?php } ?>
-                    <div class="newmember row">
-                        <form action="<?=Url::toRoute(['/task/task/add-new-member', 'taskId' => $model->id]);?>">
-                            <h4><i class="glyphicon glyphicon-plus-sign"></i> Еще заказчик:</h4>
-                            <input type="text" class="newClientInput newMemberInput" name="newclient" value="" placeholder="Начните вводить имя..." autocomplete="off" />
-                            
-                            <div class="users-list">
-                                <ul>
+                    
+                    <?php if(yii::$app->user->isManager()) { ?>
+                        <div class="newmember row">
+                            <form action="<?=Url::toRoute(['/task/task/add-new-member', 'taskId' => $model->id]);?>">
+                                <h4><i class="glyphicon glyphicon-plus-sign"></i> Еще заказчик:</h4>
+                                <input type="text" class="newClientInput newMemberInput" name="newclient" value="" placeholder="Начните вводить имя..." autocomplete="off" />
                                 
-                                </ul>
-                            </div>
-                        </form>
-                    </div>
+                                <div class="users-list">
+                                    <ul>
+                                    
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                    <?php } ?>
+
                 </div>
             </div>
         </li>

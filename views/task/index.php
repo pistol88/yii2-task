@@ -1,10 +1,13 @@
 <?php
 use yii\helpers\Url;
 use yii\helpers\Html;
+use pistol88\task\assets\TaskAsset;
 
 /* @var $this yii\web\View */
 /* @var $searchModel pistol88\task\models\tools\TaskSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+
+TaskAsset::register($this);
 
 $this->title = 'Задачи';
 $this->params['breadcrumbs'][] = $this->title;
@@ -19,14 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </p>
         </div>
         <div class="col-md-9">
-            <div class="task-menu">
-                <div class="menu-container">
-                <ul class="nav-pills pull-right nav">
-                    <li><a href="<?=Url::toRoute(['/task/task/index']);?>">Задачи</a></li>
-                    <li><a href="<?=Url::toRoute(['/task/project/index']);?>">Проекты</a></li>
-                    <li><a href="<?=Url::toRoute(['/task/arrears/index']);?>">Долги</a></li></ul>
-                </div>
-            </div>
+
         </div>
     </div>  
 
@@ -46,7 +42,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'name',
                 'content' => function($model) {
-                    return "<a href=\"".Url::toRoute(['task/view', 'id' => $model->id])."\"><strong>".$model->name."</strong></a>";
+                    if($project = $model->project) {
+                        $project = "<a href=\"".Url::toRoute(['task/index', 'TaskSearch' => ['project_id' => $project->id]])."\">".$project->name."</a>";
+                    } else {
+                        $project = '';
+                    }
+                    
+                    return " $project / <a href=\"".Url::toRoute(['task/view', 'id' => $model->id])."\"><strong>".$model->name."</strong></a>";
                 }
             ],
             [
@@ -74,7 +76,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->getReworks()->count();
                 }
             ],
-            'project.name',
             [
                 'attribute' => 'date_deadline',
                 'content' => function($model) {

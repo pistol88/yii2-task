@@ -33,18 +33,6 @@ use pistol88\task\widgets\ReworkPerfome;
         <input type="text" name="price" value="" placeholder="Оценка" />
         <input type="submit" name="add" value="Добавить" class="btn btn-submit" />
     </p>
-    
-    <br />
-    <p>
-        <input type="checkbox" id="do_notification" /> <label for="do_notification">Оповестить</label>:
-        <ul class="notified_users">
-            <?php foreach($model->members as $member) { ?>
-                <?php if($member->id != yii::$app->user->id) { ?>
-                    <li><input type="checkbox" name="do_notification[<?php echo md5($member->email); ?>]" value="on" id="rework_notof_user_<?php echo $member->id; ?>" class="n_u_<?php echo $member->getTaskType();?>" /> <label for="rework_notof_user_<?php echo $member->id; ?>"><?php if(!yii::$app->user->isCustomer()) echo $member->username; ?> (<?php echo $member->getTaskRole(); ?>)</label> </li>
-                <?php } ?>
-            <?php } ?>
-        </ul>
-    </p>
 </form>
 
 <hr />
@@ -103,6 +91,8 @@ use pistol88\task\widgets\ReworkPerfome;
                         <div class="rework_comments">
                             <?php echo \yii2mod\comments\widgets\Comment::widget([
                                 'model' => $rework,
+                                'formId' => 'comment-form-rework'.$rework->id,
+                                'pjaxContainerId' => 'unique-pjax-container-id-rework'.$rework->id
                             ]); ?>
                         </div>
                 </div>
@@ -116,18 +106,9 @@ use pistol88\task\widgets\ReworkPerfome;
                         </p>
                     <?php } ?>
                     
-                    
-                    <?php if(yii::$app->user->isManager() | yii::$app->user->isDeveloper()) { ?>
-                        <?=ReworkPrice::widget(['rework' => $rework]);?>
-                    <?php } else { ?>
-                        <p class="price">
-                            <?php if(yii::$app->user->isCustomer()) { ?>
-                                Общий бюджет:  <span class="ta_price"><?=$rework->price;?></span>
-                            <?php } else { ?>
-                                Оценка:  <span class="ta_price"><?=$rework->price;?></span>
-                            <?php } ?>
-                        </p>
-                    <?php } ?>
+                    <?=ReworkPrice::widget(['rework' => $rework]);?>
+
+                    <?=ReworkDeadline::widget(['rework' => $rework]);?>
                     
                     
                     <?=ReworkPerfome::widget(['rework' => $rework]);?>

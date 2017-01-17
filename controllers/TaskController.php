@@ -49,7 +49,7 @@ class TaskController extends Controller
     public function actionIndex()
     {
         $searchModel = new TaskSearch();
-        $dataProvider = $searchModel->search(yii::$app->user->getTasks(), Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, yii::$app->user->getTasks());
         
         if(yii::$app->user->isDeveloper()) {
             $dataProvider->query->andWhere(['status' => ['wait', 'active', 'expired']]);

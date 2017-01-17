@@ -6,10 +6,11 @@ use yii\jui\DatePicker;
         'name'  => 'deadline',
         'value'  => yii::$app->task->dateFormat($model->date_deadline),
         'language' => 'ru',
-        'dateFormat' => 'dd.MM.yyy',
-        'class' => 'full_task_page datepicker ajax_task_deadline',
+        'dateFormat' => 'dd.MM.yyyy',
         'options' => [
+            'class' => 'full_task_page datepicker ajax_task_deadline',
             'data-id' => $model->id,
+            'placeholder' => 'Дедлайн',
         ],
     ]);?>
 </div>

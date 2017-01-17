@@ -4,6 +4,7 @@ namespace pistol88\task\behaviors;
 use yii;
 use yii\base\Behavior;
 use pistol88\task\models\Task;
+use pistol88\task\models\Rework;
 use pistol88\task\models\TaskToUser;
 
 class UserTask extends Behavior
@@ -37,6 +38,19 @@ class UserTask extends Behavior
             ->viaTable('task_to_user', ['user_id' => 'id']);
     
         return $model;
+    }
+    
+    public function getReworks()
+    {
+        
+        
+        if(!yii::$app->user->isCustomer() && !yii::$app->user->isManager()) {
+            $model = $this->owner->getStaffer();
+            
+            return Rework::find()->where(['perfomer_id' => $model->id]);
+        }
+    
+        return Rework::find();
     }
     
     public function isManager()

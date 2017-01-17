@@ -40,9 +40,11 @@ class ReworkSearch extends Rework
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $query = null)
     {
-        $query = Rework::find();
+        if(!$query) {
+            $query = Rework::find();
+        }
 
         // add conditions that should always apply here
 

@@ -41,7 +41,7 @@ class Task extends Component {
             $taskToUser->task_id = $task->id;
             $taskToUser->user_id = $staffer->id;
 
-            return $taskToUser->save();
+            return $taskToUser->save(false);
         }
     }
     
@@ -52,7 +52,7 @@ class Task extends Component {
             $taskToUser->task_id = $task->id;
             $taskToUser->user_id = $client->id;
             
-            return $taskToUser->save();
+            return $taskToUser->save(false);
         }
     }
     
@@ -80,14 +80,14 @@ class Task extends Component {
     {
         $task->payment = $payment;
         
-        return $task->save();
+        return $task->save(false);
     }
     
     public function setStatus(\pistol88\task\models\Task $task, $status)
     {
         $task->status = $status;
         
-        return $task->save();
+        return $task->save(false);
     }
     
     public function setPrice(\pistol88\task\models\Task $task, $price)
@@ -99,9 +99,9 @@ class Task extends Component {
     
     public function setDeadline(\pistol88\task\models\Task $task, $deadline)
     {
-        $task->deadline = $deadline;
-        
-        return $task->save();
+        $task->date_deadline = date('Y-m-d', strtotime($deadline));
+
+        return $task->save(false);
     }
     
     public function setMemberPayment(\pistol88\task\models\Task $task, $payment, $member)
@@ -110,7 +110,7 @@ class Task extends Component {
         
         if($taskMember) {
             $taskMember->payment = $payment;
-            return $taskMember->save();
+            return $taskMember->save(false);
         } else {
             return false;
         }
@@ -122,7 +122,7 @@ class Task extends Component {
         
         if($taskMember) {
             $taskMember->status = $status;
-            return $taskMember->save();
+            return $taskMember->save(false);
         } else {
             return false;
         }
@@ -134,7 +134,7 @@ class Task extends Component {
         
         if($taskMember) {
             $taskMember->price = $price;
-            return $taskMember->save();
+            return $taskMember->save(false);
         } else {
             return false;
         }
@@ -146,7 +146,7 @@ class Task extends Component {
         
         if($taskMember) {
             $taskMember->deadline = $deadline;
-            return $taskMember->save();
+            return $taskMember->save(false);
         } else {
             return false;
         }
@@ -154,7 +154,7 @@ class Task extends Component {
     
     public function dateFormat($date)
     {
-        if($date == '0000-00-00' | $date == '1970-01-01') {
+        if($date == '0000-00-00' | $date == '1970-01-01' | $date = '01.01.1970') {
             return '';
         }
         else {
