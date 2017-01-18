@@ -28,7 +28,7 @@ pistol88.reworks = {
             
             var perfomer_username = $(rework).data('perfomer-username');
             if(!$('.reworks_mass_userlist'+perfomer_id).length) {
-                $('.reworks_mass_userlist').append('<li class="reworks_mass_userlist'+perfomer_id+'">'+perfomer_username+' '+dvizh_currency+'<span>'+price+'</span></li>');
+                $('.reworks_mass_userlist').append('<li class="reworks_mass_userlist'+perfomer_id+'">'+perfomer_username+': <span>'+price+'</span></li>');
             }
             else {
                 $('.reworks_mass_userlist'+perfomer_id+'>span').html(price+parseInt($('.reworks_mass_userlist'+perfomer_id+'>span').html()));
@@ -66,7 +66,7 @@ pistol88.reworks = {
         $('.reworks_list .rework_check_all').on('click', function() {
             if($(this).prop('checked')) {
                 $('.reworks_mass').show();
-                dvizh_engine.reworks_mass_interface();
+                pistol88.reworks.reworks_mass_interface();
             }
             else {
                 $('.reworks_mass').hide();
@@ -77,7 +77,7 @@ pistol88.reworks = {
         $('.rework_check').on('click', function() {
             if($('.reworks_list .rework_check:checked').length) {
                 $('.reworks_mass').show();
-                dvizh_engine.reworks_mass_interface();
+                pistol88.reworks.reworks_mass_interface();
             }
             else {
                 $('.reworks_mass').hide();
@@ -88,12 +88,24 @@ pistol88.reworks = {
             $('.rework_check:checked').each(function() {
                 $(this).parents('.rework_status_all').find('.ajax_rework_payment').val('yes').click();
             });
+            
+            $('#payment-to-reworks').find('span[data-role=payment-cost]').html($('.reworks_mass_price .z').html());
+            $('#payment-to-reworks').find('input[data-role=payment-sum]').val($('.reworks_mass_price .z').html());
+            $('#payment-to-reworks').find('textarea[data-role=payment-comment]').val($('.reworks_mass_checked_ids').html());
+            
+            $('#payment-to-reworks').modal('show');
         });
         
         $('.rework_mass_payment_member').on('click', function() {
             $('.rework_check:checked').each(function() {
                 $(this).parents('.rework_status_all').find('.ajax_rework_payment_perfomer').val('yes').click();
             });
+            
+            $('#payment-to-reworks').find('span[data-role=payment-cost]').html($('.reworks_mass_price .i').html());
+            $('#payment-to-reworks').find('input[data-role=payment-sum]').val($('.reworks_mass_price .i').html());
+            $('#payment-to-reworks').find('textarea[data-role=payment-comment]').val($('.reworks_mass_checked_ids').html()+' - to '+$('.reworks_mass_userlist').text());
+            
+            $('#payment-to-reworks').modal('show');
         });
         
         $('.rework_mass_status_active').on('click', function() {
@@ -142,29 +154,29 @@ pistol88.reworks = {
     rf_payment: false,
     rf_container: false,
     leave_unpayment_reworks: function() {
-        dvizh_engine.rf_container = $(this).parents('.reworks_control_panel').siblings('.reworks_list');
+        pistol88.reworks.rf_container = $(this).parents('.reworks_control_panel').siblings('.reworks_list');
         if($(this).hasClass('active')) {
             $(this).removeClass('active');
             $('#reworks .reworks_list li').show('slow');
-            dvizh_engine.rf_payment = false;
+            pistol88.reworks.rf_payment = false;
         }
         else {
             $('#reworks .reworks_control_panel a').removeClass('active');
             $(this).addClass('active');
-            dvizh_engine.rf_payment = 'no';
+            pistol88.reworks.rf_payment = 'no';
         }
-        dvizh_engine.apply_reworks_filter();
+        pistol88.reworks.apply_reworks_filter();
         return false;
     },
     reworks_filter: function() {
-        dvizh_engine.rf_container = $(this).parents('.reworks_control_panel').siblings('.reworks_list');
+        pistol88.reworks.rf_container = $(this).parents('.reworks_control_panel').siblings('.reworks_list');
         if($(this).val() == 'all') {
-            dvizh_engine.rf_status = false;
+            pistol88.reworks.rf_status = false;
         }
         else {
-            dvizh_engine.rf_status = $(this).val();
+            pistol88.reworks.rf_status = $(this).val();
         }
-        dvizh_engine.apply_reworks_filter();
+        pistol88.reworks.apply_reworks_filter();
     },
     reworks_take_list: function() {
         var textarea = $(this).siblings('textarea');
@@ -184,30 +196,30 @@ pistol88.reworks = {
         return false;
     },
     reworks_filter_member: function() {
-        dvizh_engine.rf_container = $(this).parents('.reworks_control_panel').siblings('.reworks_list');
+        pistol88.reworks.rf_container = $(this).parents('.reworks_control_panel').siblings('.reworks_list');
         if($(this).val() == 'all') {
-            dvizh_engine.rf_member = false;
+            pistol88.reworks.rf_member = false;
         }
         else {
-            dvizh_engine.rf_member = $(this).val();
+            pistol88.reworks.rf_member = $(this).val();
         }
-        dvizh_engine.apply_reworks_filter();
+        pistol88.reworks.apply_reworks_filter();
     },
     apply_reworks_filter: function() {
-        $(dvizh_engine.rf_container).find('li').hide();
-        $(dvizh_engine.rf_container).find('li').each(function() {
-            if(dvizh_engine.rf_member && dvizh_engine.rf_status) {
-                if($(this).data('perfomer') == dvizh_engine.rf_member && $(this).data('status') == dvizh_engine.rf_status) {
+        $(pistol88.reworks.rf_container).find('li').hide();
+        $(pistol88.reworks.rf_container).find('li').each(function() {
+            if(pistol88.reworks.rf_member && pistol88.reworks.rf_status) {
+                if($(this).data('perfomer') == pistol88.reworks.rf_member && $(this).data('status') == pistol88.reworks.rf_status) {
                     $(this).show();
                 }
             }
-            else if(dvizh_engine.rf_member) {
-                if($(this).data('perfomer') == dvizh_engine.rf_member) {
+            else if(pistol88.reworks.rf_member) {
+                if($(this).data('perfomer') == pistol88.reworks.rf_member) {
                     $(this).show();
                 }
             }
-            else if(dvizh_engine.rf_status) {
-                if($(this).data('status') == dvizh_engine.rf_status) {
+            else if(pistol88.reworks.rf_status) {
+                if($(this).data('status') == pistol88.reworks.rf_status) {
                     $(this).show();
                 }
             }
@@ -215,8 +227,8 @@ pistol88.reworks = {
                 $(this).show();
             }
 
-            if(dvizh_engine.rf_payment) {
-                if(parseInt($(this).data('price')) <= 0 | $(this).data('payment') != dvizh_engine.rf_payment) {
+            if(pistol88.reworks.rf_payment) {
+                if(parseInt($(this).data('price')) <= 0 | $(this).data('payment') != pistol88.reworks.rf_payment) {
                     $(this).hide();
                 }
             }

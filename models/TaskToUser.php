@@ -46,18 +46,28 @@ class TaskToUser extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
-            'task_id' => 'Task ID',
-            'project_id' => 'Project ID',
-            'price' => 'Price',
-            'status' => 'Status',
-            'deadline' => 'Deadline',
-            'payment' => 'Payment',
+            'user_id' => 'Участник',
+            'task_id' => 'Задача',
+            'project_id' => 'Проект',
+            'price' => 'Оценка',
+            'status' => 'Статус',
+            'deadline' => 'Дедлайн',
+            'payment' => 'Оплата',
         ];
     }
     
     public function getTasks()
     {
         return $this->hasMany(Task::className(), ['id' => 'task_id']);
+    }
+    
+    public function getPayment_type_id()
+    {
+        return 0;
+    }
+    
+    public function getCost()
+    {
+        return $this->price;
     }
 }

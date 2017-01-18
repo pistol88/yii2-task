@@ -25,16 +25,32 @@ TaskAsset::register($this);
     </h1>
     <div class="row">
         <div class="col-lg-5">
-            <p class="price">
-                <?php if(yii::$app->user->isManager()) { ?>
-                    <?=TaskPrice::widget(['task' => $model]);?>
-                    Бюджет: <span class="dvizh_price"><?=$model->endprice; ?></span>
-                <?php } elseif(yii::$app->user->isCustomer()) { ?>
-                    Общий бюджет:  <span class="ob_price"><?php echo $model->endprice; ?></span>
-                <?php } else { ?>
-                    Оценка:  <span class="ta_price"><?php echo $model->price; ?></span>
-                <?php } ?>
-            </p>
+            <?php if(yii::$app->user->isManager()) { ?>
+                <?=TaskPrice::widget(['task' => $model]);?>
+                Бюджет: <span class="dvizh_price"><?=$model->endprice; ?></span>
+            <?php } elseif(yii::$app->user->isCustomer()) { ?>
+                Общий бюджет:  <span class="ob_price"><?php echo $model->endprice; ?></span>
+            <?php } else { ?>
+                Оценка:  <span class="ta_price"><?php echo $model->price; ?></span>
+            <?php } ?>
+            <?php if(yii::$app->user->isManager()) { ?>
+                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#payment-<?=$model->id;?>">Оплата</button>
+                
+                <div id="payment-<?=$model->id;?>" class="modal fade" role="dialog" data-role="modal-repayment">
+                    <div class="modal-dialog" style="width: 430px;">
+
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Оплата заказа № <?=$model->id;?></h4>
+                            </div>
+                            <div class="modal-body">
+                                <?=\halumein\cashbox\widgets\RepaymentForm::widget(['useAjax' => true, 'order' => $model]); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
         <div class="col-lg-4">
             <?=TaskStatus::widget(['task' => $model]);?>
@@ -67,9 +83,6 @@ TaskAsset::register($this);
         <?php } ?>
         <li><a id="tab-actions" href="#actions" data-toggle="tab">Действия</a></li>
         <li><a id="tab-accesses" href="#accesses" data-toggle="tab">Доступы</a></li>
-        <?php if(yii::$app->user->isManager()) { ?>
-            <li><a id="tab-kudir" href="#kudir" data-toggle="tab">Финансы</a></li>
-        <?php } ?>
         <li><a id="tab-discussion" href="#discussion" data-toggle="tab">Обсуждения</a></li>
     </ul>
     <br />
@@ -107,11 +120,7 @@ TaskAsset::register($this);
         <div class="tab-pane" id="accesses">
             <pre><?php echo yii::$app->prettytext->setText($model->accesses)->links()->getText(); ?></pre>
         </div>
-        <?php if(yii::$app->user->isManager()) { ?>
-            <div class="tab-pane" id="kudir">
 
-            </div>
-        <?php } ?>
         <div class="tab-pane" id="discussion">
             <?php echo \yii2mod\comments\widgets\Comment::widget([
                 'model' => $model,

@@ -134,6 +134,16 @@ class Task extends \yii\db\ActiveRecord
         return $this->hasMany(Action::className(), ['task_id' => 'id']);
     }
     
+    public function getPayment_type_id()
+    {
+        return 0;
+    }
+    
+    public function getCost()
+    {
+        return $this->price;
+    }
+    
     public function beforeSave($insert)
     {
         parent::beforeSave($insert);

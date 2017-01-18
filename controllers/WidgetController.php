@@ -7,6 +7,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use pistol88\task\widgets\Members;
 
 /**
  * TaskController implements the CRUD actions for Task model.
@@ -43,6 +44,7 @@ class WidgetController extends Controller
             $task = yii::$app->task->get($taskId);
         } elseif($reworkId = yii::$app->request->post('rework_id')) {
             $rework = yii::$app->rework->get($reworkId);
+            $task = $rework->task;
         }
         
         switch($widget) {
@@ -90,6 +92,8 @@ class WidgetController extends Controller
                 break;
         }
         
-        return json_encode(['result' => 'success']);
+        if($task) {
+            return json_encode(['result' => 'success', 'membersWidgetHtml' => Members::widget(['task' => $task])]);
+        }
     }
 }

@@ -351,9 +351,11 @@ footer {
 .ajax_task_price, .ajax_rework_price {
     width: 100px;
 }
+
 .ajax_user_price {
 	width: 65px;
 }
+
 .status select {
     border-radius: 3px;
     padding: 2px;
@@ -364,6 +366,6 @@ footer {
 }
 
 
-.task_ajax_widget input, .task_ajax_widget select {
+.task_ajax_widget input[type=text], .task_ajax_widget select {
     width: 100px;
 }

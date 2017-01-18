@@ -75,7 +75,7 @@ use pistol88\task\widgets\ReworkPerfome;
 
 <ul class="reworks_list">
     <?php foreach($model->reworks as $rework) { ?>
-        <li class="row rework_status_<?=$rework->status;?> rework_status_all" data-status="<?=$rework->status;?>" data-perfomer="<?=$rework->perfomer_id;?>" data-payment="<?=$rework->payment;?>"  data-payment-perfomer="<?=$rework->payment_perfomer;?>" data-price="<?=$rework->price;?>" data-ob-price="<?=$rework->price;?>" title="<?=mb_substr(str_replace("\n", '', $rework->comment), 0, 200);?>" data-perfomer-username="<?=@$model->members[$rework->perfomer_id]->username;?>" id="rework<?=$rework->id;?>">
+        <li class="row rework_status_<?=$rework->status;?> rework_status_all" data-status="<?=$rework->status;?>" data-perfomer="<?=$rework->perfomer_id;?>" data-payment="<?=$rework->payment;?>"  data-payment-perfomer="<?=$rework->payment_perfomer;?>" data-price="<?=$rework->price;?>" data-ob-price="<?=$rework->price;?>" title="<?=mb_substr(str_replace("\n", '', $rework->comment), 0, 200);?>" data-perfomer-username="<?php if($perfomer = $rework->perfomer) echo $perfomer->name;?>" id="rework<?=$rework->id;?>">
                 <div class="col-lg-2 row">
                     <div class="col-lg-6">
                         <input type="checkbox" class="rework_check" data-number="<?=$rework->number;?>" value="<?=$rework->id;?>" autocomplete="off" />
@@ -128,22 +128,39 @@ use pistol88\task\widgets\ReworkPerfome;
 </ul>
 
 <div class="row reworks_mass">
-Отмеченные доработки:
-<div class="reworks_mass_price">
-    <p>З: $<span class="z">0</span>, И: $<span class="i">0</span></p>
+    Отмеченные доработки:
+    <div class="reworks_mass_price">
+        <p>Заказчик: <span class="z">0</span>, Исполнитель: <span class="i">0</span></p>
+    </div>
+
+    <ul class="reworks_mass_userlist">
+
+    </ul>
+    <p class="reworks_mass_checked_ids"></p>
+    <ul>
+        <?php if(yii::$app->user->isManager()) { ?>
+            <li><button class="btn btn-default rework_mass_payment">Оплачено заказчиком</button></li>
+            <li><button class="btn btn-default rework_mass_payment_member">Оплачено исполнителю</button></li>
+            <li><hr /></li>
+        <?php } ?>
+        <li><button class="btn btn-default rework_mass_status_active" style="border: 1px solid green;"><i class="glyphicon glyphicon-play"></i> В работе</button></li>
+        <li><button class="btn btn-success rework_mass_status_done"><i class="glyphicon glyphicon-stop"></i> Выполнено</button></li>
+        <?php if(yii::$app->user->isManager()) { ?>
+            <li><button class="btn btn-default rework_mass_status_close"><i class="glyphicon glyphicon-ok-sign"></i> Сдано</button></li>
+        <?php } ?>
+    </ul>
 </div>
 
-<ul class="reworks_mass_userlist">
-
-</ul>
-<p class="reworks_mass_checked_ids"></p>
-<ul>
-    <li><button class="btn btn-default rework_mass_payment">Было оплачено</button></li>
-    <li><button class="btn btn-default rework_mass_payment_member">Оплачено исполнителю</button></li>
-    <li><hr /></li>
-    <li><button class="btn btn-default rework_mass_status_active" style="border: 1px solid green;"><i class="glyphicon glyphicon-play"></i> В работе</button></li>
-    <li><button class="btn btn-success rework_mass_status_done"><i class="glyphicon glyphicon-stop"></i> Выполнено</button></li>			<li><button class="btn btn-default rework_mass_status_close"><i class="glyphicon glyphicon-ok-sign"></i> Сдано</button></li>
-</ul>
-
-
+<div id="payment-to-reworks" class="modal fade" role="dialog" data-role="modal-repayment">
+    <div class="modal-dialog" style="width: 430px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Оплата в задаче № <?=$model->id;?></h4>
+            </div>
+            <div class="modal-body">
+                <?=\halumein\cashbox\widgets\RepaymentForm::widget(['useAjax' => true, 'order' => $model]); ?>
+            </div>
+        </div>
+    </div>
 </div>

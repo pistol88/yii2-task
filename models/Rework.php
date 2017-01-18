@@ -72,7 +72,7 @@ class Rework extends \yii\db\ActiveRecord
     
     public function getPerfomer()
     {
-        return $this->hasOne('pistol88\staffer\models\Staffer', ['id' => 'task_id']);
+        return $this->hasOne('pistol88\staffer\models\Staffer', ['id' => 'perfomer_id']);
     }
     
     public function getMembers()
@@ -84,14 +84,24 @@ class Rework extends \yii\db\ActiveRecord
         return [];
     }
     
-    public function beforeValidate()
+    public function beforeSave($insert)
     {
-        parent::beforeValidate();
+        parent::beforeSave($insert);
         
         if(!$this->date_start) {
             $this->date_start = date('Y-m-d H:i:s');
         }
         
         return true;
+    }
+    
+    public function getPayment_type_id()
+    {
+        return 0;
+    }
+    
+    public function getCost()
+    {
+        return $this->price;
     }
 }

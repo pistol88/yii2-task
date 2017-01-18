@@ -17,9 +17,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-md-3">
             <h1><?= Html::encode($this->title) ?></h1>
-            <p>
-                <?= Html::a('Добавить задачу', ['create'], ['class' => 'btn btn-success']) ?>
-            </p>
+            <?php if(yii::$app->user->isManager()) { ?>
+                <p>
+                    <?= Html::a('Добавить задачу', ['create'], ['class' => 'btn btn-success']) ?>
+                </p>
+            <?php } ?>
         </div>
         <div class="col-md-9">
 
@@ -73,7 +75,17 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Доработки',
                 'content' => function($model) {
-                    return $model->getReworks()->count();
+                    $reworks = $model->getReworks();
+                    
+                    if(yii::$app->user->isDeveloper()) {
+                        return $reworks->andWhere(['status' => ['wait', 'active', 'expired']])->count();
+                    } elseif(yii::$app->user->isCustomer()) {
+                        return $reworks->andWhere(['status' => ['wait', 'wait_customer', 'active', 'expired']])->count();
+                    } elseif(yii::$app->user->isManager()) {
+                        return $reworks->andWhere(['status' => ['wait', 'wait_customer', 'active', 'expired', 'stop']])->count();
+                    }
+                    
+                    return $reworks->count();
                 }
             ],
             [

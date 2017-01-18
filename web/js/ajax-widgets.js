@@ -20,6 +20,9 @@ pistol88.task_ajax_widgets = {
         $(document).on('change', '.task_ajax_widget .ajax_task_price', this.change_task_price);
         $(document).on('change', '.task_ajax_widget .ajax_task_deadline', this.change_task_deadline);
     },
+    render: function(data) {
+        $('.task-members-widget').replaceWith(data.membersWidgetHtml);
+    },
     change_task_payment: function() {
         var edit_select = $(this);
         $(edit_select).css('opacity', 0.3);
@@ -30,6 +33,7 @@ pistol88.task_ajax_widgets = {
                 var json = $.parseJSON(answer);
                 if(json.result == 'success') {
                     $(edit_select).css('opacity', 1);
+                    pistol88.task_ajax_widgets.render(json);
                 }
                 else {
                     alert('Error');
@@ -47,6 +51,7 @@ pistol88.task_ajax_widgets = {
                 var json = $.parseJSON(answer);
                 if(json.result == 'success') {
                     $(edit_select).css('opacity', 1);
+                    pistol88.task_ajax_widgets.render(json);
                 }
                 else {
                     alert('Error');
@@ -64,6 +69,7 @@ pistol88.task_ajax_widgets = {
                 var json = $.parseJSON(answer);
                 if(json.result == 'success') {
                     $(edit_select).css('opacity', 1);
+                    pistol88.task_ajax_widgets.render(json);
                 }
                 else {
                     alert('Error');
@@ -82,6 +88,7 @@ pistol88.task_ajax_widgets = {
                     var json = $.parseJSON(answer);
                     if(json.result == 'success') {
                         $(edit_input).css('opacity', 1);
+                        pistol88.task_ajax_widgets.render(json);
                     }
                     else {
                         alert('Error');
@@ -101,6 +108,7 @@ pistol88.task_ajax_widgets = {
                     var json = $.parseJSON(answer);
                     if(json.result == 'success') {
                         $(edit_input).css('opacity', 1);
+                        pistol88.task_ajax_widgets.render(json);
                     }
                     else {
                         alert('Error');
@@ -120,6 +128,7 @@ pistol88.task_ajax_widgets = {
                     var json = $.parseJSON(answer);
                     if(json.result == 'success') {
                         $(edit_input).css('opacity', 1);
+                        pistol88.task_ajax_widgets.render(json);
                     }
                     else {
                         alert('Error');
@@ -139,6 +148,7 @@ pistol88.task_ajax_widgets = {
                     var json = $.parseJSON(answer);
                     if(json.result == 'success') {
                         $(edit_input).css('opacity', 1);
+                        pistol88.task_ajax_widgets.render(json);
                     }
                     else {
                         alert('Error');
@@ -158,6 +168,7 @@ pistol88.task_ajax_widgets = {
                     var json = $.parseJSON(answer);
                     if(json.result == 'success') {
                         $(edit_input).css('opacity', 1);
+                        pistol88.task_ajax_widgets.render(json);
                     }
                     else {
                         alert('Error');
@@ -176,6 +187,7 @@ pistol88.task_ajax_widgets = {
                 var json = $.parseJSON(answer);
                 if(json.result == 'success') {
                     $(edit_select).css('opacity', 1);
+                    pistol88.task_ajax_widgets.render(json);
                 }
                 else {
                     alert('Error');
@@ -193,6 +205,7 @@ pistol88.task_ajax_widgets = {
                 var json = $.parseJSON(answer);
                 if(json.result == 'success') {
                     $(edit_select).css('opacity', 1);
+                    pistol88.task_ajax_widgets.render(json);
                 }
                 else {
                     alert('Error');
@@ -210,6 +223,7 @@ pistol88.task_ajax_widgets = {
                 var json = $.parseJSON(answer);
                 if(json.result == 'success') {
                     $(edit_select).css('opacity', 1);
+                    pistol88.task_ajax_widgets.render(json);
                 }
                 else {
                     alert('Error');
@@ -228,6 +242,7 @@ pistol88.task_ajax_widgets = {
                     var json = $.parseJSON(answer);
                     if(json.result == 'success') {
                         $(edit_input).css('opacity', 1);
+                        pistol88.task_ajax_widgets.render(json);
                     }
                     else {
                         alert('Error');
@@ -248,6 +263,7 @@ pistol88.task_ajax_widgets = {
                     var json = $.parseJSON(answer);
                     if(json.result == 'success') {
                         $(edit_input).css('opacity', 1);
+                        pistol88.task_ajax_widgets.render(json);
                     }
                     else {
                         alert('Error');
@@ -268,6 +284,7 @@ pistol88.task_ajax_widgets = {
                     var json = $.parseJSON(answer);
                     if(json.result == 'success') {
                         $(edit_input).css('opacity', 1);
+                        pistol88.task_ajax_widgets.render(json);
                     }
                     else {
                         alert('Error');

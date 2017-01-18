@@ -51,6 +51,10 @@ class TaskMember extends Behavior
         }
     }
     
+    public function getTaskRelation($task)
+    {
+        return TaskToUser::findOne(['task_id' => $task->id, 'user_id' => $this->owner->id]);
+    }
 
     public function getTaskPrice($task)
     {
