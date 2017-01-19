@@ -3,6 +3,7 @@ namespace pistol88\task;
 
 use pistol88\task\models\TaskToUser;
 use pistol88\task\models\Task as TaskModel;
+use pistol88\task\models\Rework as ReworkModel;
 use yii\base\Component;
 use yii;
 
@@ -32,6 +33,19 @@ class Task extends Component {
     public function userAccess(\pistol88\task\models\Task $task, $member)
     {
         return TaskToUser::find()->where(['task_id' => $task->id, 'user_id' => $member->id])->one();
+    }
+    
+    public function addRework($task, $reworkData)
+    {
+        $rework = new ReworkModel;
+        $rework->text = $reworkData['text'];
+        $rework->task_id = $task->id;
+        $rework->number = $reworkData['number'];
+        $rework->status = $reworkData['status'];
+        $rework->perfomer_id = $reworkData['perfomer_id'];
+        $rework->date_start = $reworkData['date_start'];
+        
+        return $rework->save();
     }
     
     public function addStaffer(\pistol88\task\models\Task $task, \pistol88\staffer\models\Staffer $staffer)

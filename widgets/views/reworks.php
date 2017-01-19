@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\jui\DatePicker;
 use pistol88\task\widgets\ReworkPrice;
 use pistol88\task\widgets\ReworkStatus;
 use pistol88\task\widgets\ReworkPayment;
@@ -12,7 +13,7 @@ use pistol88\task\widgets\ReworkPerfome;
     <a href="#" class="scroll_bottom" style="float: right;"> &darr;Перемотать вниз </a>
 <?php } ?>
 <h4><a href="#" onclick="$('#reworks .add_rework').toggle('slow'); return false;"> <i class="glyphicon glyphicon-plus"></i> Добавить правки </a> </h4>
-<form class="add_rework" action="<?=Url::toRoute('reworks/add');?>" style="display: none;">
+<form class="add_rework" action="<?=Url::toRoute('/task/rework/add');?>" style="display: none;">
     <input type="hidden" name="task_id" value="<?=$model->id;?>" />
     <textarea name="rework_list" placeholder="Каждая с новой строки и с цифрой в начале"></textarea>
     <p>
@@ -30,7 +31,18 @@ use pistol88\task\widgets\ReworkPerfome;
                 <option value="<?=$member->id;?>"><?php if(!yii::$app->user->isCustomer()) echo $member->username;?> (<?=$member->getTaskRole();?>)</option>
             <?php } ?>
         </select>
-        <input type="text" name="price" value="" placeholder="Оценка" />
+        <?=DatePicker::widget([
+            'name'  => 'deadline',
+            'value'  => '',
+            'language' => 'ru',
+            'dateFormat' => 'dd.MM.yyyy',
+            'options' => [
+                'class' => 'full_task_page datepicker ajax_task_deadline',
+                'placeholder' => 'Дедлайн',
+                'style' => 'width: 82px',
+            ],
+        ]);?>
+        <input type="text" name="price" value="" placeholder="Оценка" style="width: 70px;" />
         <input type="submit" name="add" value="Добавить" class="btn btn-submit" />
     </p>
 </form>

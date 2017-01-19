@@ -75,24 +75,43 @@ class ReworkController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Rework model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
+    public function actionAdd()
     {
         $model = new Rework();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
+        $data = yii::$app->request->post();
+        
+        $task = $this->findModel($data['task_id']);
 
+		$json = ['result' => 'success'];
+		
+        $reworksList = $data['rework_list'];
+        $newList = preg_split('/\n\d+[\.\)]/Usi', str_replace("\r", '', "\n".$reworksList."\n"));
+			
+        if(empty($newList[0])) {
+            unset($newList[0]);
+        }
+
+        $increment = yii::$app->rework->getTaskAutoincrement($task);
+
+        foreach($newList as $text) {
+            $reworkData = array(
+                'text' => trim(htmlspecialchars($text)),
+                'task_id' => $task->id,
+                'status' => $data['rework_status'],
+                'perfomer_id' => (int)$data['perfomer_id'],
+                'date_start' => date('Y-m-d H:i:s'),
+                'deadline' => $data['deadline'];
+                'number' => $increment,
+            );
+            
+            yii::$app->task->addRework($task, $reworkData);
+            $increment++;
+        }
+
+		die(json_encode($json));
+    }
+    
     /**
      * Updates an existing Rework model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -134,7 +153,7 @@ class ReworkController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Rework::findOne($id)) !== null) {
+        if (($model = yii::$app->rework->get($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

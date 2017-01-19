@@ -66,4 +66,11 @@ class Rework extends Component {
         
         return $rework->save(false);
     }
+    
+    public function getTaskAutoincrement($task)
+    {
+        $increment = (int)ReworkModel::find()->where(['task_id' => $task->id])->max('number');
+        
+        return $increment;
+    }
 }

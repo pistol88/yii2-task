@@ -36,7 +36,7 @@ class Rework extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['text', 'date_start', 'date_deadline', 'task_id', 'perfomer_id', 'price', 'number', 'comment'], 'required'],
+            [['text', 'date_start', 'task_id', 'perfomer_id', 'number'], 'required'],
             [['text', 'status', 'payment', 'payment_perfomer', 'comment'], 'string'],
             [['date_start', 'date_deadline'], 'safe'],
             [['task_id', 'perfomer_id', 'number'], 'integer'],
