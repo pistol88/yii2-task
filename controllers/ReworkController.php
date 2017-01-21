@@ -4,6 +4,7 @@ namespace pistol88\task\controllers;
 
 use Yii;
 use pistol88\task\models\Rework;
+use pistol88\task\widgets\Reworks;
 use pistol88\task\models\tools\ReworkSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -81,7 +82,7 @@ class ReworkController extends Controller
 
         $data = yii::$app->request->post();
         
-        $task = $this->findModel($data['task_id']);
+        $task = yii::$app->task->get($data['task_id']);
 
 		$json = ['result' => 'success'];
 		
@@ -101,13 +102,18 @@ class ReworkController extends Controller
                 'status' => $data['rework_status'],
                 'perfomer_id' => (int)$data['perfomer_id'],
                 'date_start' => date('Y-m-d H:i:s'),
-                'deadline' => $data['deadline'];
+                'deadline' => $data['deadline'],
                 'number' => $increment,
             );
             
             yii::$app->task->addRework($task, $reworkData);
+            
             $increment++;
         }
+        
+        $task = yii::$app->task->get($data['task_id']);
+        
+        $json['reworksWidgetHtml'] = Reworks::widget(['task' => $task]);
 
 		die(json_encode($json));
     }

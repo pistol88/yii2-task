@@ -2,7 +2,7 @@
 namespace pistol88\task;
 
 use pistol88\task\models\TaskToUser;
-use pistol88\task\models\Task;
+use pistol88\task\models\Task as TaskModel;
 use pistol88\task\models\Rework as ReworkModel;
 use yii\base\Component;
 use yii;
@@ -71,6 +71,10 @@ class Rework extends Component {
     {
         $increment = (int)ReworkModel::find()->where(['task_id' => $task->id])->max('number');
         
-        return $increment;
+        if(!$increment) {
+            return 1;
+        }
+        
+        return $increment+1;
     }
 }

@@ -238,7 +238,7 @@ pistol88.reworks = {
         var form_element = $(this);
         var form_data = $(this).serialize();
         var form_action = $(this).attr('action');
-        $('#reworks .reworks_list').css('opacity', 0.3);
+        $(form_element).css('opacity', 0.3);
         $.post(
             form_action,
             form_data,
@@ -248,10 +248,8 @@ pistol88.reworks = {
                     alert(answer.error);
                 }
                 else {
-                    $('.add_rework').hide('slow');
-                    $('.add_rework textarea').val('');
-                    $('#reworks .reworks_list').html(answer.reworks_list);
-                    $('#reworks .reworks_list').css('opacity', 1);
+                    $(form_element).css('opacity', 1);
+                    $('#task-reworks-widget').replaceWith(answer.reworksWidgetHtml);
                     $("html,body").animate({"scrollTop":$("body").height()}, 800); 
                 }
             }

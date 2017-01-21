@@ -6,6 +6,8 @@ use pistol88\task\widgets\Rework;
 
 ?>
 
+
+<div id="task-reworks-widget">
 <?php if(count($model->reworks) > 9) { ?>
     <a href="#" class="scroll_bottom" style="float: right;"> &darr;Перемотать вниз </a>
 <?php } ?>
@@ -130,4 +132,5 @@ use pistol88\task\widgets\Rework;
             </div>
         </div>
     </div>
+</div>
 </div>
