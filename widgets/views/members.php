@@ -82,6 +82,4 @@ use pistol88\task\widgets\MemberDeadline;
         </li>
     </ul>
 
-
-
 </div>
