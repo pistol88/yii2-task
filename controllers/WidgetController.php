@@ -8,6 +8,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use pistol88\task\widgets\Members;
+use pistol88\task\widgets\Rework;
+use pistol88\task\widgets\TaskHeader;
 
 /**
  * TaskController implements the CRUD actions for Task model.
@@ -42,9 +44,14 @@ class WidgetController extends Controller
     {
         if($taskId = yii::$app->request->post('task_id')) {
             $task = yii::$app->task->get($taskId);
+            $rework = false;
+            $taskId = $task->id;
+            $reworkId = false;
         } elseif($reworkId = yii::$app->request->post('rework_id')) {
             $rework = yii::$app->rework->get($reworkId);
             $task = $rework->task;
+            $taskId = $task->id;
+            $reworkId = $rework->id;
         }
         
         switch($widget) {
@@ -93,7 +100,13 @@ class WidgetController extends Controller
         }
         
         if($task) {
-            return json_encode(['result' => 'success', 'membersWidgetHtml' => Members::widget(['task' => $task])]);
+            $htmlData = '';
+            
+            if($rework) {
+                $htmlData = Rework::widget(['rework' => $rework]);
+            }
+            
+            return json_encode(['reworkId' => $reworkId, 'taskId' => $taskId, 'htmlData' => $htmlData, 'result' => 'success', 'membersWidgetHtml' => Members::widget(['task' => $task]), 'taskHeaderWidgetHtml' => TaskHeader::widget(['task' => $task]),]);
         }
     }
 }

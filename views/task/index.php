@@ -10,18 +10,20 @@ use pistol88\task\assets\TaskAsset;
 TaskAsset::register($this);
 
 $this->title = 'Задачи';
-$this->params['breadcrumbs'][] = $this->title;
+
+if($project) {
+    $this->params['breadcrumbs'][] = ['label' => yii::$app->task->projectsNames['many'], 'url' => '/task/project/index'];
+    $this->params['breadcrumbs'][] = ['label' => $project->name, 'url' => Url::toRoute(['/task/task/index', 'TaskSearch' => ['project_id' => $project->id]])];
+} else {
+    $this->params['breadcrumbs'][] = $this->title;
+}
+
 ?>
 <div class="task-index">
     
     <div class="row">
         <div class="col-md-3">
             <h1><?= Html::encode($this->title) ?></h1>
-            <?php if(yii::$app->user->isManager()) { ?>
-                <p>
-                    <?= Html::a('Добавить задачу', ['create'], ['class' => 'btn btn-success']) ?>
-                </p>
-            <?php } ?>
         </div>
         <div class="col-md-9">
 

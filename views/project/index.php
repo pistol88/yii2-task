@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel pistol88\task\models\tools\ProjectSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Сайты';
+$this->title = yii::$app->task->projectsNames['many'];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="project-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Добавить сайт', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить '.yii::$app->task->projectsNames['one'], ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?=  \kartik\grid\GridView::widget([
@@ -27,7 +27,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'name',
 
-            ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 150px;']],
+            [
+                'label' => 'Задачи',
+                'content' => function($model) {
+                    $return =  Html::a('<i class="glyphicon glyphicon-eye-open"></i>', ['/task/task/index', 'TaskSearch' => ['project_id' => $model->id]], ['class' => 'btn btn-default', 'title' => 'Смотреть']);
+                    return  $return . ' ' . Html::a('<i class="glyphicon glyphicon-plus"></i>', ['/task/task/create', 'project' => $model->id], ['class' => 'btn btn-success', 'title' => 'Добавить']);
+                }
+            ],
+            
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 150px;']],
         ],
     ]); ?>
 </div>

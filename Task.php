@@ -2,12 +2,18 @@
 namespace pistol88\task;
 
 use pistol88\task\models\TaskToUser;
+use pistol88\task\models\Project;
 use pistol88\task\models\Task as TaskModel;
 use pistol88\task\models\Rework as ReworkModel;
 use yii\base\Component;
 use yii;
 
 class Task extends Component {
+    
+    public $projectsNames = [
+        'one' => 'Сайт',
+        'many' => 'Сайты',
+    ];
     
     public $notDevelopersRoles = [
         'user', 'superadmin', 'administrator'
@@ -20,8 +26,8 @@ class Task extends Component {
     
     public $statuses = [
         "active" => 'Активно',
-        "wait" => 'Ожидание З',
-        "wait_customer" => 'Ожидание оценки',
+        "wait" => 'Ожидание оценки',
+        "wait_customer" => 'Ожидание З',
         "done" => 'Выполнено',
         "expired" => 'Сроки истекли',
         "close" => 'Сдано',
@@ -29,6 +35,11 @@ class Task extends Component {
         "money" => 'Ожидание оплаты',
         "deleted" => 'Удалено'
     ];
+    
+    public function getProject($projectId)
+    {
+        return Project::findOne($projectId);
+    }
     
     public function userAccess(\pistol88\task\models\Task $task, $member)
     {

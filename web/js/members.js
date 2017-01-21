@@ -6,7 +6,7 @@ pistol88.task_members = {
     init: function() {
         $(document).on('keypress', '.task-members-widget .newDeveloperInput', this.addNewDeveloper);
         $(document).on('keypress', '.task-members-widget .newClientInput', this.addNewClient);
-        //$(document).on('submit', '.task-members-widget .newmember form', this.addNewMember)
+        $(document).on('submit', '.task-members-widget .newmember form', this.addNewMember)
         $(document).on('click', '.task-members-widget .deleteMember', this.deleteMember);
         $(document).on('click', '.task-members-widget .memberCheckbox', this.sendNewMemberForm)
     },
@@ -18,7 +18,7 @@ pistol88.task_members = {
         var str = $(this).val();
         var input = $(this);
         $.post(
-            '/client/tools/get-clients-by-name',
+            dvizhUrl+'/client/tools/get-clients-by-name',
             {ajax: "true", str: str},
             function(answer) {
                 var json = $.parseJSON(answer);
@@ -39,7 +39,7 @@ pistol88.task_members = {
         var str = $(this).val();
         var input = $(this);
         $.post(
-            '/staffer/tools/get-staffers-by-name',
+            dvizhUrl+'/staffer/tools/get-staffers-by-name',
             {ajax: "true", str: str},
             function(answer) {
                 var json = $.parseJSON(answer);

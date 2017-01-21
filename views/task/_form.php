@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
@@ -16,19 +17,29 @@ use kartik\select2\Select2;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?php if($project) { ?>
+        <div class="form-group field-task-name required has-error">
+            <label class="control-label" for="task-show-project"><?=yii::$app->task->projectsNames['one'];?></label>
+            <input type="text" class="form-control" value="<?=$project->name;?>" disabled>
+        </div>
+    <?php } ?>
+    
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'project_id')
-        ->widget(Select2::classname(), [
-        'data' => ArrayHelper::map(Project::find()->all(), 'id', 'name'),
-        'language' => 'ru',
-        'options' => ['placeholder' => 'Выберите проект ...'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
+    <?= $form->field($model, 'project_id')->hiddenInput()->label(false); ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+    <?php echo $form->field($model, 'description')->widget(
+        \yii\imperavi\Widget::className(),
+        [
+            'plugins' => ['fullscreen', 'fontcolor', 'video'],
+            'options'=>[
+                'minHeight' => 400,
+                'maxHeight' => 400,
+                'buttonSource' => true,
+                'imageUpload' => Url::toRoute(['tools/upload-imperavi'])
+            ]
+        ]
+    ) ?>
     
     <?= $form->field($model, 'accesses')->textarea(['rows' => 6, 'placeholder' => 'Если пусто - подставится из проекта']) ?>
 

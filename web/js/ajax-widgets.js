@@ -22,6 +22,14 @@ pistol88.task_ajax_widgets = {
     },
     render: function(data) {
         $('.task-members-widget').replaceWith(data.membersWidgetHtml);
+        
+        if(data.reworkId) {
+            $('.rework_'+data.reworkId).replaceWith(data.htmlData);
+        }
+        
+        if(data.taskId) {
+            $('.tashHeader'+data.taskId).replaceWith(data.taskHeaderWidgetHtml);
+        }
     },
     change_task_payment: function() {
         var edit_select = $(this);

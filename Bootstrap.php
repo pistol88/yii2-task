@@ -20,6 +20,7 @@ class Bootstrap implements BootstrapInterface
         
         yii::$app->view->on('endBody', function() {
             echo "<script>var dvizhTaskToolsUrl = '".Url::toRoute(['/task/widget/multi-widget', 'widget' => ''])."';</script>";
+            echo "<script>var dvizhUrl = '".yii::$app->request->baseUrl."';</script>";
         });
         
         if(!$application->has('task')) {

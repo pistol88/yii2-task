@@ -1,5 +1,5 @@
 <?php
-
+use yii\helpers\Url;
 use yii\helpers\Html;
 
 
@@ -7,7 +7,8 @@ use yii\helpers\Html;
 /* @var $model pistol88\task\models\Task */
 
 $this->title = 'Добавление задачи';
-$this->params['breadcrumbs'][] = ['label' => 'Задачи', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => yii::$app->task->projectsNames['many'], 'url' => ['/task/project/index']];
+$this->params['breadcrumbs'][] = ['label' => $project->name, 'url' => Url::toRoute(['/task/task/index', 'TaskSearch' => ['project_id' => $project->id]])];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="task-create">
@@ -16,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'project' => $project,
     ]) ?>
 
 </div>

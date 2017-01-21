@@ -35,8 +35,10 @@ class Task extends \yii\db\ActiveRecord
 
     public static function find()
     {
-        return new TaskQuery(get_called_class());
-    }    
+        $taskQuery = new TaskQuery(get_called_class());
+        
+        return $taskQuery->with('stafferRelation')->with('clientRelation')->with('reworks');
+    }
 
     /**
      * @inheritdoc
@@ -45,8 +47,8 @@ class Task extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'project_id', 'description', 'status'], 'required'],
-            [['project_id', 'price', 'haron_user_id', 'updated', 'surcharge'], 'integer'],
-            [['description', 'accesses', 'status', 'payment', 'members_data', 'members', 'date_deadline'], 'string'],
+            [['project_id', 'price', 'haron_user_id', 'updated'], 'integer'],
+            [['description', 'accesses', 'status', 'payment', 'members', 'date_deadline'], 'string'],
             [['date_start', 'date_deadline'], 'safe'],
             [['name'], 'string', 'max' => 255],
         ];
@@ -102,9 +104,19 @@ class Task extends \yii\db\ActiveRecord
         return $members;
     }
     
+    public function getStafferRelation()
+    {
+        return $this->hasMany('pistol88\staffer\models\Staffer', ['id' => 'user_id'])->viaTable('task_to_user', ['task_id' => 'id']);
+    }
+    
+    public function getClientRelation()
+    {
+        return $this->hasMany('pistol88\client\models\Client', ['id' => 'user_id'])->viaTable('task_to_user', ['task_id' => 'id']);
+    }
+    
     public function getStaffers()
     {
-        $staffers = $this->hasMany('pistol88\staffer\models\Staffer', ['id' => 'user_id'])->viaTable('task_to_user', ['task_id' => 'id'])->all();
+        $staffers = $this->stafferRelation;
         
         foreach($staffers as $staffer) {
             $staffer->attachBehavior('tasks', 'pistol88\task\behaviors\TaskMember');
@@ -115,7 +127,7 @@ class Task extends \yii\db\ActiveRecord
     
     public function getClients()
     {
-        $clients = $this->hasMany('pistol88\client\models\Client', ['id' => 'user_id'])->viaTable('task_to_user', ['task_id' => 'id'])->all();
+        $clients = $this->clientRelation;
         
         foreach($clients as $client) {
             $client->attachBehavior('tasks', 'pistol88\task\behaviors\TaskMember');
@@ -163,7 +175,7 @@ class Task extends \yii\db\ActiveRecord
     {
         parent::afterSave($insert, $changedAttributes);
      
-        if(!$this->accesses && $this->project) {
+        if(!$this->accesses && $this->project && $insert) {
             $this->accesses = $this->project->accesses;
             $this->save(false);
         }

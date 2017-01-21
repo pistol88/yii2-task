@@ -26,7 +26,10 @@
         "nex/yii2-datepicker": "*",
         "pistol88/yii2-staffer": "*",
         "pistol88/yii2-client": "*",
-        "yiisoft/yii2-jui": "~2.0.0"
+        "yiisoft/yii2-jui": "~2.0.0",
+        "asofter/yii2-imperavi-redactor": "dev-master@dev",
+        "trntv/yii2-file-kit": "@stable",
+        "league/flysystem": "*"
     },
     "config": {
         "process-timeout": 1800

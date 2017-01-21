@@ -59,11 +59,21 @@ class TaskController extends Controller
             $dataProvider->query->andWhere(['status' => ['wait', 'active', 'expired', 'wait_customer']]);
         }
         
+        $project = false;
+        
+        if($taskSearch = Yii::$app->request->get('TaskSearch')) {
+            if(isset($taskSearch['project_id'])) {
+                $projectId = $taskSearch['project_id'];
+                $project = yii::$app->task->getProject($projectId);
+            }
+        }
+        
         if(!Yii::$app->request->get('sort')) {
             $dataProvider->query->orderBy('last_action DESC, id DESC');
         }
         
         return $this->render('index', [
+            'project' => $project,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -125,15 +135,27 @@ class TaskController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($project = null)
     {
         $model = new Task();
-
+        
+        $model->payment = 'no';
+        $model->status = 'wait';
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $project = yii::$app->task->getProject($project);
+
+            if(!$project) {
+                throw new NotFoundHttpException('The requested page does not exist.');
+            }
+
+            $model->project_id = $project->id;
+            
             return $this->render('create', [
                 'model' => $model,
+                'project' => $project,
             ]);
         }
     }
@@ -151,7 +173,10 @@ class TaskController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $project = $model->project;
+            
             return $this->render('update', [
+                'project' => $project,
                 'model' => $model,
             ]);
         }
