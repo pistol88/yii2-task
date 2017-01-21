@@ -15,11 +15,7 @@ use pistol88\task\widgets\MemberDeadline;
                     <?php foreach($model->staffers as $member) { ?>
                         <div class="row memberLine">
                             <div class="col-md-10">
-                                <?php if(isset($member->avatar) && !empty($member->avatar)) { ?>
-                                    <div class="avatar"><a href="<?php echo Url::toRoute(["/staffer/staffer/view", 'id' => $member->id]); ?>"><img src="<?php echo base_url("upload/avatars/$member->avatar"); ?>" /></a></div>
-                                <?php } ?>
-
-                                <p><a href="<?php echo Url::toRoute(["/staffer/staffer/view", 'id' => $member->id]); ?>"><strong><?php echo $member->username;?></strong></a> (<small><?php echo $member->getTaskRole(); ?>)</p>
+                                <p><a href="<?php echo Url::toRoute(["/staffer/staffer/view", 'id' => $member->id]); ?>"><strong><?php echo $member->username;?></strong></a> (<small><?php echo $member->getTaskRole(); ?></small>)</p>
                             </div>
                             <?php if(yii::$app->user->isManager()) { ?><div class="col-md-2"><a href="<?=Url::toRoute(['/task/task/remove-member', 'taskId' => $model->id, 'memberId' => $member->id]);?>" class="deleteMember btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a></div><?php } ?>
                             <div class="col-md-3">
@@ -59,9 +55,6 @@ use pistol88\task\widgets\MemberDeadline;
                     <?php foreach($model->clients as $member) { ?>
                         <div class="row memberLine">
                             <div class="col-md-8">
-                                <?php if(isset($member->avatar) && !empty($member->avatar)) { ?>
-                                    <div class="avatar"><a href="<?php echo Url::toRoute(["/client/client/view", 'id' => $member->id]); ?>"><img src="<?php echo base_url("upload/avatars/$member->avatar"); ?>" /></a></div>
-                                <?php } ?>
                                 <?php if(!yii::$app->user->isCustomer()) { ?><a href="<?php echo Url::toRoute(["/client/client/view", 'id' => $member->id]); ?>"><strong><?php echo $member->username;?></strong></a><?php } ?>
                                 <p><small><?php echo $member->getTaskRole(); ?></small></p>
                             </div> 
@@ -88,7 +81,5 @@ use pistol88\task\widgets\MemberDeadline;
             </div>
         </li>
     </ul>
-
-
 
 </div>
