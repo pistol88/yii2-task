@@ -175,6 +175,8 @@ class TaskController extends Controller
         } else {
             $project = $model->project;
             
+            $model->date_deadline = yii::$app->task->dateFormat($model->date_deadline);
+            
             return $this->render('update', [
                 'project' => $project,
                 'model' => $model,

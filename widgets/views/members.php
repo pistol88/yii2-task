@@ -14,24 +14,29 @@ use pistol88\task\widgets\MemberDeadline;
                     <h3>Сотрудники</h3>
                     <?php foreach($model->staffers as $member) { ?>
                         <div class="row memberLine">
-                            <div class="col-md-2">
+                            <div class="col-md-10">
                                 <?php if(isset($member->avatar) && !empty($member->avatar)) { ?>
                                     <div class="avatar"><a href="<?php echo Url::toRoute(["/staffer/staffer/view", 'id' => $member->id]); ?>"><img src="<?php echo base_url("upload/avatars/$member->avatar"); ?>" /></a></div>
                                 <?php } ?>
 
-                                <a href="<?php echo Url::toRoute(["/staffer/staffer/view", 'id' => $member->id]); ?>"><strong><?php echo $member->username;?></strong></a>
-                                <p><small><?php echo $member->getTaskRole(); ?></small></p>
-                            </div> 
-                            <div class="col-md-4">
-                                <?=MemberStatus::widget(['task' => $model, 'member' => $member]);?>
-                                <?=MemberDeadline::widget(['task' => $model, 'member' => $member]);?>
-                            </div>
-                            <div class="col-md-4">
-                                <?=MemberPrice::widget(['task' => $model, 'member' => $member]);?>
-                                <?=MemberPayment::widget(['task' => $model, 'member' => $member]);?>
+                                <p><a href="<?php echo Url::toRoute(["/staffer/staffer/view", 'id' => $member->id]); ?>"><strong><?php echo $member->username;?></strong></a> (<small><?php echo $member->getTaskRole(); ?>)</p>
                             </div>
                             <?php if(yii::$app->user->isManager()) { ?><div class="col-md-2"><a href="<?=Url::toRoute(['/task/task/remove-member', 'taskId' => $model->id, 'memberId' => $member->id]);?>" class="deleteMember btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a></div><?php } ?>
+                            <div class="col-md-3">
+                                <?=MemberStatus::widget(['task' => $model, 'member' => $member]);?>
+                            </div>
+                            <div class="col-md-3">
+                                <?=MemberDeadline::widget(['task' => $model, 'member' => $member]);?>
+                            </div>
+                            <div class="col-md-3">
+                                <?=MemberPrice::widget(['task' => $model, 'member' => $member]);?>
+                            </div>
+                            <div class="col-md-3">
+                                <?=MemberPayment::widget(['task' => $model, 'member' => $member]);?>
+                            </div>
+                            
                         </div>
+                        <hr />
                     <?php } ?>
                     
                     <?php if(yii::$app->user->isManager()) { ?>
