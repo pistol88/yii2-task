@@ -18,9 +18,9 @@ use kartik\select2\Select2;
     <?php $form = ActiveForm::begin(); ?>
 
     <?php if($project) { ?>
-        <div class="form-group field-task-name required has-error">
+        <div class="form-group field-task-proj-name">
             <label class="control-label" for="task-show-project"><?=yii::$app->task->projectsNames['one'];?></label>
-            <input type="text" class="form-control" value="<?=$project->name;?>" disabled>
+            <input type="text" id="task-show-project" class="form-control" value="<?=$project->name;?>" disabled>
         </div>
     <?php } ?>
     
