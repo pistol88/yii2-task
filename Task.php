@@ -179,7 +179,7 @@ class Task extends Component {
     
     public function dateFormat($date)
     {
-        if($date == '0000-00-00' | $date == '1970-01-01' | $date = '01.01.1970') {
+        if($date == '0000-00-00' | $date == '1970-01-01' | $date == '01.01.1970') {
             return '';
         }
         else {

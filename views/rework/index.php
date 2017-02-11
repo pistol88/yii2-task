@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
             'perfomer.name',
-            ['class' => 'yii\grid\ActionColumn', 'template' => '{view}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 50px;']],
+            //['class' => 'yii\grid\ActionColumn', 'template' => '{update}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 50px;']],
         ],
     ]); ?>
 </div>

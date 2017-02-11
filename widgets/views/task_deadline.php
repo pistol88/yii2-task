@@ -2,6 +2,7 @@
 use yii\jui\DatePicker;
 ?>
 <div class="task_ajax_widget">
+
     <?=DatePicker::widget([
         'name'  => 'deadline',
         'value'  => yii::$app->task->dateFormat($model->date_deadline),

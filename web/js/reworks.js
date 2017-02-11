@@ -51,7 +51,7 @@ pistol88.reworks = {
             }
         });
         $(document).on('click', '.reworks_list > li.rework_status_all', function(e) {
-            if(!$(e.target).val() && !$(e.target).hasClass('ajax_rework_status') && $(this).find('.full_rework').length == 0) { 
+            if(!$(e.target).val() && !$(e.target).hasClass('ajax_rework_status') && !$(e.target).hasClass('full_rework') && !$(e.target).parent().hasClass('full_rework') && $(this).find('.full_rework').length == 0) { 
                 $('.full_rework').remove();
                 $(this).after('<li class="full_rework">'+$(this).html()+'</li>');
                 $('.full_rework').find('input[type=radio]').each(function() {
