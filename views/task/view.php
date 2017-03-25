@@ -66,7 +66,7 @@ TaskAsset::register($this);
                     }
                     ?>
                 </ul>
-            <? } ?>
+            <?php } ?>
         </div>
         <div class="tab-pane" id="accesses">
             <pre><?php echo yii::$app->prettytext->setText($model->accesses)->links()->getText(); ?></pre>
