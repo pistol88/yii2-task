@@ -44,7 +44,7 @@ TaskAsset::register($this);
                 <?=$model->description;?>
             </div>
         </div>
-        <div class="tab-pane active" id="checkpoints">
+        <div class="tab-pane" id="checkpoints">
             <p>Раздел в разработке...</p>
         </div>
         <div class="tab-pane" id="reworks">
