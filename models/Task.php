@@ -48,7 +48,7 @@ class Task extends \yii\db\ActiveRecord
         return [
             [['name', 'project_id', 'description', 'status'], 'required'],
             [['project_id', 'price', 'haron_user_id', 'updated'], 'integer'],
-            [['description', 'accesses', 'status', 'payment', 'members', 'date_deadline'], 'string'],
+            [['description', 'accesses', 'status', 'payment', 'date_deadline'], 'string'],
             [['date_start', 'date_deadline'], 'safe'],
             [['name'], 'string', 'max' => 255],
         ];
