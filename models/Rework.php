@@ -104,4 +104,9 @@ class Rework extends \yii\db\ActiveRecord
     {
         return $this->price;
     }
+
+    public function getEndprice()
+    {
+        return ($this->price*2);
+    }
 }

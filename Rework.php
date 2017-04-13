@@ -77,4 +77,11 @@ class Rework extends Component {
         
         return $increment+1;
     }
+
+    public function getDebts($status)
+    {
+        $tasks = ReworkModel::find()->where(['status' => $status])->andWhere(['payment' => 'no'])->andWhere('price>0');
+
+        return $tasks->all();
+    }
 }

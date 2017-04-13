@@ -186,4 +186,15 @@ class Task extends Component {
             return date('d.m.Y', strtotime($date));
         }
     }
+
+    public function getByStatus($status, $payment = null)
+    {
+        $tasks = TaskModel::find()->where(['status' => $status]);
+
+        if($payment) {
+            $tasks->andWhere(['payment' => $payment]);
+        }
+
+        return $tasks->all();
+    }
 }

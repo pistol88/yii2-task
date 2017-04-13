@@ -113,6 +113,16 @@ class Task extends \yii\db\ActiveRecord
     {
         return $this->hasMany('pistol88\client\models\Client', ['id' => 'user_id'])->viaTable('task_to_user', ['task_id' => 'id']);
     }
+
+    public function getStaffer()
+    {
+        return $this->getStafferRelation();
+    }
+
+    public function getClient()
+    {
+        return $this->getClientRelation();
+    }
     
     public function getStaffers()
     {
@@ -155,7 +165,12 @@ class Task extends \yii\db\ActiveRecord
     {
         return $this->price;
     }
-    
+
+    public function getDebt()
+    {
+        return ($this->cost-yii::$app->cashbox->getPaymentsSumByOrder($this->id));
+    }
+
     public function beforeSave($insert)
     {
         parent::beforeSave($insert);
