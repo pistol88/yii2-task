@@ -5,7 +5,8 @@ use pistol88\task\widgets\TaskPayment;
 use pistol88\task\widgets\TaskDeadline;
 ?>
     <div class="row tashHeader tashHeader<?=$model->id;?>">
-        <div class="col-lg-5">
+        <div class="col-md-3">
+            <p>Оценка ТА:</p>
             <?php if(yii::$app->user->isManager()) { ?>
                 <?=TaskPrice::widget(['task' => $model]);?>
                 Бюджет: <span class="dvizh_price"><?=$model->endprice; ?></span>
@@ -33,16 +34,20 @@ use pistol88\task\widgets\TaskDeadline;
                 </div>
             <?php } ?>
         </div>
-        <div class="col-lg-4">
+        <div class="col-md-3">
+            <p>Общий статус:</p>
             <?=TaskStatus::widget(['task' => $model]);?>
-
+        </div>
+        <div class="col-md-3">
+            <p>Задача оплачена:</p>
             <?php if(yii::$app->user->isManager()) { ?>
                 <?=TaskPayment::widget(['task' => $model]);?>
             <?php } else { ?>
                 <p>Оплата задачи: <?=$model->payment;?></p>
             <?php } ?>
         </div>
-        <div class="col-lg-3">
+        <div class="col-md-3">
+            <p>Выполнить до:</p>
             <p class="deadline">
                 <?php if(yii::$app->user->isManager()) { ?>
                     <?=TaskDeadline::widget(['task' => $model]);?>
