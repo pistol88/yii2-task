@@ -56,7 +56,7 @@ class TaskController extends Controller
         } elseif(yii::$app->user->isCustomer()) {
             $dataProvider->query->andWhere(['status' => ['wait', 'active', 'expired', 'wait_customer']]);
         } else {
-            $dataProvider->query->andWhere(['status' => ['wait', 'active', 'expired', 'wait_customer']]);
+            $dataProvider->query->andWhere(['status' => ['wait', 'active', 'expired', 'wait_customer', 'money']]);
         }
         
         $project = false;
